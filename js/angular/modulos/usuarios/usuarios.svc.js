@@ -1,13 +1,13 @@
 function usuariosService($http, BACKEND) {
     var self = this;
-    var idUsuario = 0;
+    var idUsuario;
     
     self.setIdUsuario = function(param){
-        idUsuario = param;
+        this.idUsuario = param;
     };
     
      self.getIdUsuario = function(){
-        return idUsuario;
+        return this.idUsuario;
     };
 
     self.create = function( json ){

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('bikeApp.reservasUser', ['ngRoute']).config(['$routeProvider', function($routeProvider){
+angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios']).config(['$routeProvider', function($routeProvider){
     $routeProvider
         .when('/reservas/user', {
         templateUrl: 'js/angular/modulos/reservas_user/reservas_user.tpl.html',
@@ -10,8 +10,10 @@ angular.module('bikeApp.reservasUser', ['ngRoute']).config(['$routeProvider', fu
         templateUrl: 'js/angular/modulos/reservas_user/reservar.tpl.html',
         controller: 'ReservasUserController'
     });
+    
+    
 }])
-    .controller('ReservasUserController', ['$scope','$rootScope','filterFilter', '$http', '$location', '$routeParams', 'reservasUserSvc','usuariosSvc', 'sharedId', function($scope, $rootScope, filterFilter, $http, $location, $routeParams, reservasUserSvc, usuariosSvc, sharedId){
+    .controller('ReservasUserController', ['$scope', 'filterFilter', '$rootScope', '$http', '$location', '$routeParams', 'reservasUserSvc', 'usuariosSvc', 'authSvc', function($scope, filterFilter, $rootScope, $http, $location, $routeParams, reservasUserSvc, usuariosSvc, authSvc){
 
         $scope.reservaActual = {};
         $scope.reservaNueva = {};
@@ -23,30 +25,28 @@ angular.module('bikeApp.reservasUser', ['ngRoute']).config(['$routeProvider', fu
         $scope.invalido = false;
         $scope.hayError = false;
         $scope.error1;
-        $scope.userid;
-  
+        $scope.idActual;
+
 
         //Cargar reservas del usuario
         $scope.retrieve = function()
         {
             //TODO Poner id del usuario aquí
-            $scope.userid = sharedId.getProperty();
-            console.log($scope.userid);
-            var id_usuario =  sharedId.getProperty();
+            var id_usuario = authSvc.getId();
+            console.log( authSvc.getId() );
             $scope.hayError = false;
             reservasUserSvc.retrieve( id_usuario ).then(function successCallback(response) {
                 $scope.items = response.data;
             }, function errorCallback(response) {
                 console.log(response);
                 console.log('error');
-                $scope.hayError = true;
-                $scope.error1 = response.data;
+
                 //TODO Mostrar mensaje de error al usuario
             });
         };
         
         //TODO Descomentar cuando ya se tenga disponible el id del usuario
-        $scope.retrieve();
+       $scope.retrieve();
         
         
         //Cargar puntos y tipos de bicicleta
@@ -59,8 +59,6 @@ angular.module('bikeApp.reservasUser', ['ngRoute']).config(['$routeProvider', fu
             }, function errorCallback(response) {
                 console.log(response);
                 console.log('error');
-                    $scope.hayError = true;
-                $scope.error1 = response.data;
 
                 //TODO Mostrar mensaje de error al usuario
             });
@@ -71,8 +69,6 @@ angular.module('bikeApp.reservasUser', ['ngRoute']).config(['$routeProvider', fu
             }, function errorCallback(response) {
                 console.log(response);
                 console.log('error');
-                    $scope.hayError = true;
-                $scope.error1 = response.data;
                 //TODO Mostrar mensaje de error al usuario
             });
         };
@@ -97,7 +93,8 @@ angular.module('bikeApp.reservasUser', ['ngRoute']).config(['$routeProvider', fu
             }
 
             //TODO Poner aquí el ID de usuario
-            var id_usuario = $rootScope.idUsuarioLogueado;
+            var id_usuario = authSvc.getId();
+            console.log(usuariosSvc.getIdUsuario());
 
             console.log(json);
             
@@ -112,8 +109,6 @@ angular.module('bikeApp.reservasUser', ['ngRoute']).config(['$routeProvider', fu
                     $scope.selectedTipo = {};
                 }, function errorCallback(response) {
                     console.log('error');
-                    $scope.hayError = true;
-                    $scope.error1 = response.data;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -137,8 +132,6 @@ angular.module('bikeApp.reservasUser', ['ngRoute']).config(['$routeProvider', fu
                     $scope.showUpdate = false;
                 }, function errorCallback(response) {
                     console.log('error');
-                    $scope.hayError = true;
-                    $scope.error1 = response.data;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }

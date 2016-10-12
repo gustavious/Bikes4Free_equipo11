@@ -1,6 +1,16 @@
-function reservasUserService($http, BACKEND) {
+function reservasUserService($http, BACKEND, usuariosSvc) {
     var self = this;
-
+    var idActual;
+    
+    
+     self.setIdUsuario = function(param){
+        usuariosSvc.setIdUsuario(param);
+    };
+    
+     self.getIdUsuario = function(){
+        return usuariosSvc.getIdUsuario();
+    };
+    
     self.create = function( id_usuario, json ){
         return $http({
             method: 'POST',
@@ -61,4 +71,5 @@ function reservasUserService($http, BACKEND) {
 
 };
 
-angular.module('bikeApp').service('reservasUserSvc', reservasUserService);
+angular.module('bikeApp')
+       .service('reservasUserSvc', reservasUserService);

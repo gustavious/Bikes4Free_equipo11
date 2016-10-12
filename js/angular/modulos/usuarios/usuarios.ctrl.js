@@ -16,7 +16,7 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
         });
 }])
  .constant('BACKEND', 'http://b4f2.herokuapp.com/webresources/')
-    .controller('UsuariosController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'usuariosSvc','authSvc', 'sharedId', function($scope, $rootScope, $http, $location, $routeParams, usuariosSvc, authSvc, sharedId){
+    .controller('UsuariosController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'usuariosSvc','authSvc', function($scope, $rootScope, $http, $location, $routeParams, usuariosSvc, authSvc){
 
         $scope.usuarioActual = {};
         $scope.usuarioNuevo = {};
@@ -226,11 +226,10 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
             $scope.submitted=true;
             usuariosSvc.login($scope.usuarioNuevo.usuario, $scope.usuarioNuevo.password).then(function successCallback(response) {
                 
-                
                 $scope.usuariologueado = response.data.usuario;
-                sharedId.setProperty($scope.usuariologueado.id);
-                console.log(sharedId.getProperty());
+                authSvc.saveId(response.data.usuario.id);
                 authSvc.saveToken(response.data.token);
+                console.log(authSvc.getId());
                 $scope.hayError=false;
                 $scope.loggued = true;
                 

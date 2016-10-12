@@ -38,7 +38,15 @@ function authService($window) {
     self.saveToken = function (token) {
         $window.localStorage['jwtToken'] = token;
     };
-
+    
+    self.saveId = function (param) {
+        $window.localStorage['iduser'] = param;
+    };
+    
+    self.getId = function () {
+        return $window.localStorage['iduser'];
+    };
+    
     self.getToken = function () {
         return $window.localStorage['jwtToken'];
     };
@@ -57,6 +65,7 @@ function authService($window) {
 
     self.logout = function () {
         $window.localStorage.removeItem('jwtToken');
+        $window.localStorage.removeItem('iduser');
     };
 }
 ;
