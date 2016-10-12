@@ -1,0 +1,15 @@
+<img id="logorgs" src="img/logo3.png">
+<div id="usuarios-create" class="form">
+    <form name="loginForm" ng-submit="login()">
+        <input type="text" placeholder="Usuario" id="usuarios-create-nombre" ng-model="usuarioNuevo.usuario" 
+               name="loginUser" ng-maxlength="50" required>
+        <p ng-show="loginForm.loginUser.$error.required && submitted" style="color:darkred;">Por favor ingrese su nombre de usuario</p>
+        <p ng-show="loginForm.loginUser.$error.maxlength && submitted" style="color:darkred;">El número máximo de caracteres ha sido excedido</p>
+        <input type="password" placeholder="Contraseña" id="usuarios-create-nombre" ng-model="usuarioNuevo.password" 
+               name="loginPass" ng-maxlength="50" ng-keyup="$event.keyCode == 13 && login()"  required>
+        <p ng-show="loginForm.loginPass.$error.required && submitted" style="color:darkred;">Por favor ingrese su contraseña</p>
+        <p ng-show="loginForm.loginPass.$error.maxlength && submitted" style="color:darkred;">El número máximo de caracteres ha sido excedido</p>
+    </form>
+    <p ng-show="darError()" style="color:darkred;">{{error1}}</p>
+    <span id="loginbtn" class="success label"><button ng-click="login()">Iniciar Sesión</button></span>
+</div>

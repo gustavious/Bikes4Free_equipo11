@@ -1,0 +1,19 @@
+<div id="tabla">
+    <div class="actions">
+        <a ng-href="#/{{entidad}}/form" class="success button">Nuevo</a>
+    </div>
+    <table class="list">
+        <thead>
+            <th ng-repeat="c in cols">{{c}}</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in items">
+                <td ng-repeat ="i in item">{{i}}</td>
+                <td>
+                    <span class="warning label"><button ng-click="update(item)">Editar</button></span>
+                    <span class="alert label"><button ng-click="eliminar(item)"> Eliminar </button></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

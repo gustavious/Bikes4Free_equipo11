@@ -1,0 +1,61 @@
+<div id="reservas-retrieve" class="table" ng-if="showTable">
+    <div class="list-div">
+        <table class="list">
+            <thead>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Estado</th>
+                <th>Fecha Reserva</th>
+                <th>Fecha Entrega</th>
+                <th>Tiempo Reserva</th>
+                <th>Punto Préstamo</th>
+                <th>Punto Retorno</th>
+                <th>ID Bicicleta</th>
+                <th>Multa</th>
+                <th>Usuario Autorizado</th>
+                <th>Registrar</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in items">
+                    <td>{{i.id}}</td>
+                    <td>{{i.usuario.nombre}} {{i.usuario.apellido}}</td>
+                    <td>{{i.estado}}</td>
+                    <td>{{i.fecha_reserva | date:'medium'}}</td>
+                    <td>{{i.fecha_entrega | date:'medium'}}</td>
+                    <td>{{i.tiempo | ms_horas}} horas</td>
+                    <td>{{i.puntoPrestamo.nombre}}</td>
+                    <td ng-if="i.puntoRetorno.nombre != null">{{i.puntoRetorno.nombre}}</td>
+                    <td ng-if="i.puntoRetorno.nombre == null">No ha sido retornada</td>
+                    <td>{{i.bici.id}}</td>
+                    <td ng-if="i.multa.valor != null">{{i.multa.valor}}</td>
+                    <td ng-if="i.multa.valor == null">0</td>
+                    <td ng-if="i.autorizado.nombre != null && i.autorizado.apellido != null">{{i.autorizado.nombre}} {{i.autorizado.apellido}}</td>
+                    <td ng-if="i.autorizado.nombre == null && i.autorizado.apellido == null">Ninguno</td>
+                    <td>
+                        <span class="warning label"><button ng-click="lend(i)">Préstamo</button></span>
+                        <span class="alert label"><button ng-click="receive(i)">Retorno</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&signed_in=true"></script>
+<div id="reservas-update" class="form" ng-if="showUpdate && !darError()">
+    <form name="reservaUpdateForm" novalidate>
+        <input type="hidden" id="reservas-update-id" ng-model="reservaActual.id">
+        Punto de retorno:
+        <!--        <div id="map"></div>-->
+        <select ng-model="selectedPunto.obj" ng-options="punto.nombre for punto in puntos">
+        </select>
+
+        Multas:
+        <label ng-repeat="multa in multas" ng-if="multa.editable === true">
+            <input type="checkbox" checklist-model="selectedMultas" checklist-value="multa.id"> {{multa.nombre}}
+        </label>
+    </form>
+
+    <span class="success label"><button ng-click="update()" ng-disabled="reservaUpdateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>

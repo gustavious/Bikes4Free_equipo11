@@ -1,0 +1,10 @@
+<div id="form">
+    <form>
+        <p ng-repeat="c in cols">
+            {{c}}:
+            <input type="text" ng-model="item.c" id="{{c}}">
+        </p>
+    </form>
+    <button ng-click="salvar()" class="success button">Guardar</button>
+    <a ng-href="#/{{entidad}}/tabla" class="success button">Cancelar</a>
+</div>

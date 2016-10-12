@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Bikes4Free</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/style2.css">
+        <link rel="stylesheet" href="css/foundation.css">
+        <link rel="stylesheet" href="css/foundation-icons.css" />
+        <link href="css/style2.css" type="text/css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="img/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" type="image/png" href="img/favicon-16x16.png" sizes="16x16">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,700" rel="stylesheet">
+    </head>
+
+    <body ng-app="bikeApp">
+
+    <nav id="nav-login" class="top-bar-bike">
+        <div class="top-bar-left">
+            <img id="logo" src="img/logo2.png">
+        </div>
+
+        <div class="top-bar-right">
+            <ul class="menu">
+                <li><a class="button" id="loguearse" href="#/login">Iniciar Sesión</a></li>
+                <li><a class="button" id="registrarse" href="#/register">Registrarse</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="mainContainer">
+        <div id="loginContainer">
+            <div id="view-module" ng-view></div>
+        </div>
+    </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+        <script src="js/lib/jquery.js"></script>
+        <script src="js/lib/what-input.js"></script>
+        <script src="js/lib/checklist-model.js"></script>
+        <script src="js/lib/foundation.js"></script>
+        <script src="js/lib/node_modules/angular-route/angular-cookis.js" type="text/javascript"></script>
+        <script src="js/angular/app.js"></script>
+        <script src="js/angular/modulos/components/tabla.ctrl.js"></script>
+        <script src="js/angular/modulos/components/form.ctrl.js"></script>
+        <script src="js/angular/modulos/components/update.ctrl.js"></script>
+        <script src="js/angular/modulos/tipos/tipos.ctrl.js"></script>
+        <script src="js/angular/modulos/tipos/tipos.svc.js"></script>
+        <script src="js/angular/modulos/multas/multas.ctrl.js"></script>
+        <script src="js/angular/modulos/multas/multas.svc.js"></script>
+        <script src="js/angular/modulos/puntos/puntos.ctrl.js"></script>
+        <script src="js/angular/modulos/puntos/puntos.svc.js"></script>
+        <script src="js/angular/modulos/usuarios/usuarios.ctrl.js"></script>
+        <script src="js/angular/modulos/usuarios/usuarios.svc.js"></script>
+        <script src="js/angular/modulos/reservas_admin/reservas_admin.ctrl.js"></script>
+        <script src="js/angular/modulos/reservas_admin/reservas_admin.svc.js"></script>
+        <script src="js/angular/modulos/reservas_user/reservas_user.ctrl.js"></script>
+        <script src="js/angular/modulos/reservas_user/reservas_user.svc.js"></script>
+        <script src="js/angular/servicios/AuthService.js" type="text/javascript"></script>
+        <script src="js/angular/servicios/sharedIdService.js" type="text/javascript"></script>
+    </body>
+</html>

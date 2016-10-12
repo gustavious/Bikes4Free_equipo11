@@ -1,0 +1,57 @@
+<div id="tipos-retrieve" class="table" ng-if="showTable">
+    <div class="actions">
+        <span class="new success label"><button ng-click="new()">Nuevo</button></span>
+    </div>
+    <div class="list-div">
+        <table class="list">
+            <thead>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in items">
+                    <td>{{i.nombre}}</td>
+                    <td>{{i.descripcion}}</td>
+                    <td>
+                        <span class="warning label"><button ng-click="edit(i)">Editar</button></span>
+                        <span class="alert label"><button ng-click="delete(i.id)">Eliminar</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="tipos-create" class="form" ng-if="showCreate">
+    <form name="tiposCreateForm">
+        Nombre:
+        <input name="tiposCreateNombre" type="text" id="tipos-create-nombre" ng-model="tipoNuevo.nombre" ng-minlength="3" ng-maxlength="20" required>
+        <p ng-show="tiposCreateForm.tiposCreateNombre.$error.minlength" class="help-block" style="color:darkred;">Nombre demasiado corto</p>
+        <p ng-show="tiposCreateForm.tiposCreateNombre.$error.maxlength" class="help-block" style="color:darkred;">Nombre demasiado largo</p>
+        <p ng-show="tiposCreateForm.tiposCreateNombre.$error.required && !tiposCreateForm.tiposCreateNombre.$pristine" style="color:darkred;">Es necesario un nombre para el tipo debicicleta</p>
+        Descripción:
+        <input name="tiposCreateDesc" type="text" id="tipos-create-descripcion" ng-model="tipoNuevo.descripcion" ng-maxlength="250">
+        <p ng-show="tiposCreateForm.tiposCreateDesc.$error.maxlength" class="help-block" style="color:darkred;">Descripción demasiado larga</p>
+    </form>
+    <span class="success label"><button ng-click="create()" ng-disabled="tiposCreateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>
+
+
+<div id="tipos-update" class="form" ng-if="showUpdate">
+    <form name="tiposUpdateForm">
+        <input type="hidden" id="tipos-update-id" ng-model="tipoActual.id">
+        Nombre:
+        <input type="text"  name="tiposUpdateNombre" id="tipos-update-nombre" ng-model="tipoActual.nombre" ng-minlength="3" ng-maxlength="20" required>
+        <p ng-show="tiposUpdateForm.tiposUpdateNombre.$error.minlength" class="help-block" style="color:darkred;">Nombre demasiado corto</p>
+        <p ng-show="tiposUpdateForm.tiposUpdateNombre.$error.maxlength" class="help-block" style="color:darkred;">Nombre demasiado largo</p>
+        <p ng-show="tiposUpdateForm.tiposUpdateNombre.$error.required && !tiposUpdateForm.tiposUpdateNombre.$pristine" style="color:darkred;">Es necesario un nombre para el tipo debicicleta</p>
+        Descripción:
+        <input type="text" name="tiposUpdateDesc" id="tipos-update-descripcion" ng-model="tipoActual.descripcion" ng-maxlength="250">
+        <p ng-show="tiposUpdateForm.tiposUpdateDesc.$error.maxlength" class="help-block" style="color:darkred;">Descripción demasiado larga</p>
+    </form>
+    <span class="success label"><button ng-click="update()" ng-disabled="tiposUpdateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>

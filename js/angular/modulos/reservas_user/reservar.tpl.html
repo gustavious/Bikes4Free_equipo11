@@ -1,0 +1,45 @@
+<div id="reservar-retrieve" class="table" ng-if="showTable">
+    <div class="list-div">
+        <table class="list">
+            <thead>
+                <th>Nombre</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="punto in puntos">
+                    <td>{{punto.nombre}}</td>
+                    <td>{{punto.latitud}}</td>
+                    <td>{{punto.longitud}}</td>
+                    <td>
+                        <span class="success label"><button ng-click="reservar(punto)">Reservar bici</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="reservar-create" class="form" ng-if="showCreateReservar && !darError()">
+    <form name="reservarCreateForm" novalidate>
+        Tipo de Bici:
+        <select ng-model="selectedTipo.obj" ng-options="tipo.nombre for tipo in tipos">
+        </select>
+        Fecha:
+        <input type="date" ng-model="reservaNueva.fecha" required>
+        Autorizado:
+        <input type="text" ng-model="reservaNueva.autorizado">
+    </form>
+    <span class="success label"><button ng-click="create()" ng-disabled="reservarCreateForm.$invalid">Reservar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>
+
+<div ng-if="darError()" class="alert callout" data-closable>
+    <h5>¡Parece que ha ocurrido un error!</h5>
+    <p>{{error1}}</p>
+    <button ng-click="cerrarError()" class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

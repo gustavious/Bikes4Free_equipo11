@@ -1,0 +1,78 @@
+<div id="multas-retrieve" class="table" ng-if="showTable">
+    <div class="actions">
+        <span class="new success label"><button ng-click="new()">Nuevo</button></span>
+    </div>
+    <div class="list-div">
+        <table class="list">
+            <thead>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Valor</th>
+                <th>Editable</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in items">
+                    <td>{{i.nombre}}</td>
+                    <td>{{i.descripcion}}</td>
+                    <td>{{i.valor}}</td>
+                    <td ng-if="i.editable === true">Sí</td>
+                    <td ng-if="i.editable === false">No</td>
+                    <td>
+                        <span class="warning label"><button ng-click="edit(i)">Editar</button></span>
+                        <span class="alert label"><button ng-click="delete(i.id)">Eliminar</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="multas-create" class="form" ng-if="showCreate && !darError()">
+    <form name="multaCreateForm" novalidate>
+        Nombre:
+        <input type="text" name="multaCreateNombre" id="multas-create-nombre"  ng-minlength="3" ng-maxlength = "30" ng-model="multaNueva.nombre" required>
+        <p ng-show="multaCreateForm.multaCreateNombre.$error.minlength" class="help-block" style="color:darkred;">Nombre demasiado corto</p>
+        <p ng-show="multaCreateForm.multaCreateNombre.$error.maxlength" class="help-block" style="color:darkred;">Nombre demasiado largo</p>
+        <p ng-show="multaCreateForm.multaCreateNombre.$error.required && !multaCreateForm.multaCreateNombre.$pristine" style="color:darkred;">Es necesario un nombre de multa</p>
+        Descripción:
+        <input type="text" name="multaCreateDesc" id="multas-create-descripcion" ng-model="multaNueva.descripcion" ng-maxlength="250" required>
+        <p ng-show="multaCreateForm.multaCreateDesc.$error.maxlength" class="help-block" style="color:darkred;">Excedió la capacidad de la descripción</p>
+        <p ng-show="multaCreateForm.multaCreateDesc.$error.required && !multaCreateForm.multaCreateNombre.$pristine" style="color:darkred;">Es necesaria una descripción</p>
+        Valor:
+        <input type="number" name="multaCreateValor" id="multas-create-valor" ng-model="multaNueva.valor" required>
+        <p ng-show="multaCreateForm.multaCreateValor.$error.required && !multaCreateForm.multaCreateValor.$pristine" style="color:darkred;">Es necesario un valor para la multa</p>
+    </form>
+    <span class="success label"><button ng-click="create()" ng-disabled="multaCreateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>
+
+<div ng-if="darError()" class="alert callout" data-closable>
+    <h5>¡Parece que ha ocurrido un error!</h5>
+    <p>{{error1}}</p>
+    <button ng-click="cerrarError()" class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<div id="multas-update" class="form" ng-if="showUpdate && !darError()">
+    <form name="multaUpdateForm" novalidate>
+        <input type="hidden" id="multas-update-id" ng-model="multaActual.id">
+        Nombre:
+        <input type="text" name="multaUpdateNombre" id="multas-update-nombre" ng-model="multaActual.nombre" ng-minlength="3" ng-maxlength="30" required>
+        <p ng-show="multaUpdateForm.multaUpdateNombre.$error.minlength" class="help-block" style="color:darkred;">Nombre demasiado corto</p>
+        <p ng-show="multaUpdateForm.multaUpdateNombre.$error.maxlength" class="help-block" style="color:darkred;">Nombre demasiado largo</p>
+        <p ng-show="multaUpdateForm.multaUpdateNombre.$error.required && !multaUpdateForm.multaUpdateNombre.$pristine" style="color:darkred;">Es necesario un nombre de multa</p>
+        Descripción:
+        <input type="text" name="multaUpdateDesc" id="multas-update-descripcion" ng-model="multaActual.descripcion" required ng-maxlength="250">
+        <p ng-show="multaUpdateForm.multaUpdateDesc.$error.maxlength" class="help-block" style="color:darkred;">Excedió la capacidad de la descripción</p>
+        <p ng-show="multaUpdateForm.multaUpdateDesc.$error.required && !multaUpdateForm.multaUpdateDesc.$pristine" style="color:darkred;">Es necesaria una descripción</p>
+        Valor:
+        <input type="number" name="multaUpdateValor" id="multas-update-valor" ng-model="multaActual.valor" required>
+        <p ng-show="multaUpdateForm.multaUpdateValor.$error.required && !multaUpdateForm.multaUpdateValor.$pristine" style="color:darkred;">Es necesario un valor para la multa</p>
+    </form>
+    <span class="success label"><button ng-click="update()" ng-disabled="multaUpdateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>

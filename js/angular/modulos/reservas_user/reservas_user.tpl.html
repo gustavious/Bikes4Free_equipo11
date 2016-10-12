@@ -1,0 +1,91 @@
+<div id="reservas-retrieve" class="table" ng-if="showTable">
+    <div class="list-div">
+        <table class="list">
+            <thead>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Fecha Reserva</th>
+                <th>Fecha Entrega</th>
+                <th>Tiempo Reserva</th>
+                <th>Punto Préstamo</th>
+                <th>Punto Retorno</th>
+                <th>ID Bicicleta</th>
+                <th>Multa</th>
+                <th>Usuario Autorizado</th>
+<!--                <th>Acciones</th>-->
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in items">
+                    <td>{{i.id}}</td>
+                    <td>{{i.usuario.nombre}} {{i.usuario.apellido}}</td>
+                    <td>{{i.fecha_reserva}}</td>
+                    <td>{{i.fecha_entrega}}</td>
+                    <td>{{i.tiempo}}</td>
+                    <td>{{i.puntoPrestamo.nombre}}</td>
+                    <td ng-if="i.puntoRetorno.nombre != null">{{i.puntoRetorno.nombre}}</td>
+                    <td ng-if="i.puntoRetorno.nombre == null">No ha sido retornada</td>
+                    <td>{{i.bici.id}}</td>
+                    <td ng-if="i.multa.valor != null">{{i.multa.valor}}</td>
+                    <td ng-if="i.multa.valor == null">0</td>
+                    <td ng-if="i.autorizado.nombre != null && i.autorizado.apellido != null">{{i.autorizado.nombre}} {{i.autorizado.apellido}}</td>
+                    <td ng-if="i.autorizado.nombre == null && i.autorizado.apellido == null">Ninguno</td>
+<!--
+                    <td>
+                        <span class="warning label"><button ng-click="lend(i)">Registrar préstamo</button></span>
+                        <span class="alert label"><button ng-click="receive(i)">Registrar retorno</button></span>
+                    </td>
+-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="reservas-create" class="form" ng-if="showCreate && !darError()">
+    <form name="reservaCreateForm" novalidate>
+        Nombre:
+        <input type="text" name="reservaCreateNombre" id="reservas-create-nombre"  ng-minlength="3" ng-maxlength = "30" ng-model="reservaNueva.nombre" required>
+        <p ng-show="reservaCreateForm.reservaCreateNombre.$error.minlength" class="help-block" style="color:darkred;">Nombre demasiado corto</p>
+        <p ng-show="reservaCreateForm.reservaCreateNombre.$error.maxlength" class="help-block" style="color:darkred;">Nombre demasiado largo</p>
+        <p ng-show="reservaCreateForm.reservaCreateNombre.$error.required && !reservaCreateForm.reservaCreateNombre.$pristine" style="color:darkred;">Es necesario un nombre de multa</p>
+        Descripción:
+        <input type="text" name="reservaCreateDesc" id="reservas-create-descripcion" ng-model="reservaNueva.descripcion" ng-maxlength="250" required>
+        <p ng-show="reservaCreateForm.reservaCreateDesc.$error.maxlength" class="help-block" style="color:darkred;">Excedió la capacidad de la descripción</p>
+        <p ng-show="reservaCreateForm.reservaCreateDesc.$error.required && !reservaCreateForm.reservaCreateNombre.$pristine" style="color:darkred;">Es necesaria una descripción</p>
+        Valor:
+        <input type="number" name="reservaCreateValor" id="reservas-create-valor" ng-model="reservaNueva.valor" required>
+        <p ng-show="reservaCreateForm.reservaCreateValor.$error.required && !reservaCreateForm.reservaCreateValor.$pristine" style="color:darkred;">Es necesario un valor para la multa</p>
+    </form>
+    <span class="success label"><button ng-click="create()" ng-disabled="reservaCreateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>
+
+<div ng-if="darError()" class="alert callout" data-closable>
+    <h5>¡Parece que ha ocurrido un error!</h5>
+    <p>{{error1}}</p>
+    <button ng-click="cerrarError()" class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+<div id="reservas-update" class="form" ng-if="showUpdate && !darError()">
+    <form name="reservaUpdateForm" novalidate>
+        <input type="hidden" id="reservas-update-id" ng-model="reservaActual.id">
+        Nombre:
+        <input type="text" name="reservaUpdateNombre" id="reservas-update-nombre" ng-model="reservaActual.nombre" ng-minlength="3" ng-maxlength="30" required>
+        <p ng-show="reservaUpdateForm.reservaUpdateNombre.$error.minlength" class="help-block" style="color:darkred;">Nombre demasiado corto</p>
+        <p ng-show="reservaUpdateForm.reservaUpdateNombre.$error.maxlength" class="help-block" style="color:darkred;">Nombre demasiado largo</p>
+        <p ng-show="reservaUpdateForm.reservaUpdateNombre.$error.required && !reservaUpdateForm.reservaUpdateNombre.$pristine" style="color:darkred;">Es necesario un nombre de multa</p>
+        Descripción:
+        <input type="text" name="reservaUpdateDesc" id="reservas-update-descripcion" ng-model="reservaActual.descripcion" required ng-maxlength="250">
+        <p ng-show="reservaUpdateForm.reservaUpdateDesc.$error.maxlength" class="help-block" style="color:darkred;">Excedió la capacidad de la descripción</p>
+        <p ng-show="reservaUpdateForm.reservaUpdateDesc.$error.required && !reservaUpdateForm.reservaUpdateDesc.$pristine" style="color:darkred;">Es necesaria una descripción</p>
+        Valor:
+        <input type="number" name="reservaUpdateValor" id="reservas-update-valor" ng-model="reservaActual.valor" required>
+        <p ng-show="reservaUpdateForm.reservaUpdateValor.$error.required && !reservaUpdateForm.reservaUpdateValor.$pristine" style="color:darkred;">Es necesario un valor para la multa</p>
+    </form>
+    <span class="success label"><button ng-click="update()" ng-disabled="reservaUpdateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>

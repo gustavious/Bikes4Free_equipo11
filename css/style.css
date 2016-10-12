@@ -1,0 +1,226 @@
+/*
+COLORS
+Super Light Grey: #FCFCFC
+Light Grey: #f7f7f7
+Grey: #262626
+Red: #c70039
+Orange: #ff5733
+Light Orange: #ff8d1a
+Yellow: #ffc300
+Neon green: #eddd53
+Green: #add45c
+Blueish green: #57c785
+Light blue: #00baad
+Blue: #2a7b9b
+Dark blue: #3d3d6b
+Purple: #511849
+Mahogany: #900c3f
+*/
+
+
+html, body {
+    padding: 0;
+    margin: 0;
+    display: inline;
+    background-color: #f7f7f7;
+    font-family: 'Quicksand', sans-serif;
+    color: #393939;
+}
+
+#logo{
+    width: 150px;
+    margin-left: 35px;
+    margin-bottom: 25px;
+}
+
+nav{
+    background-color: #00baad;
+/*    display: none;*/
+    width: 100%;
+    height: 70px;
+    color: #fff;
+    padding: 5px;
+    box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
+    z-index: 2;
+    position: absolute;
+}
+
+#sesion{
+    float: right;
+    background-color: #009e8f;
+/*    background-color: #66b7f0;*/
+    width: 130px;
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#sesion:hover{
+    background-color: #eddd53;
+}
+
+#mainContainer{
+    display: inline;
+/*    padding-top: 50px;*/
+}
+
+#moduleContainer{
+    display: inline;
+    float: left;
+    padding: 40px;
+    padding-top: 90px;
+}
+
+.list{
+/*    width: auto;*/
+    text-align: center;
+}
+
+.table{
+    display: inline;
+}
+
+.list-div{
+    overflow: auto;
+    display: block;
+}
+
+#sidebar{
+    display: block;
+    background-color: #fff;
+    min-width: 100px;
+    width: 220px;
+    height: 120%;
+    min-height: 100%;
+    float: left;
+    z-index: 1;
+    padding-top: 90px;
+}
+
+#sidebar ul li:hover{
+    background-color: #488ec0;
+}
+
+.vertical-dropdown-menu{
+    width: 220px;
+}
+
+#sidebar ul li a{
+    font-weight: 700;
+    color: #00baad;
+    padding-left: 40px;
+}
+
+#drop-usuarios:hover{
+    background-color: #c70039;
+    color: #fff;
+}
+
+#drop-multas:hover{
+    background-color: #ff5733;
+    color: #fff;
+}
+
+#drop-puntos:hover{
+    background-color: #ff8d1a;
+    color: #fff;
+}
+
+#drop-tipos:hover{
+    background-color: #ffc300;
+    color: #fff;
+}
+
+#drop-reservas:hover{
+    background-color: #add45c;
+    color: #fff;
+}
+
+#drop-mantenimiento:hover{
+    background-color: #00baad;
+    color: #fff;
+}
+
+#drop-reportes:hover{
+    background-color: #3d3d6b;
+    color: #fff;
+}
+
+#loginContainer{
+    height: auto;
+    width: 100%;
+    align-content: center;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: block;
+}
+
+#register-form{
+    width: 250px;
+    display: block;
+}
+
+table{
+    overflow: scroll;
+    display: block;
+    width: auto;
+}
+
+th, td{
+    background-color: #fff;
+    color: #393939;
+    min-width: 150px;
+    max-width: 200px;
+}
+
+
+tr th{
+    text-align: center !important;
+}
+
+thead, tbody{
+    border-radius: 5px !important;
+}
+
+input{
+    border-radius: 5px !important;
+    border-style: none !important;
+}
+
+button{
+    height: 25px !important;
+    width: auto;
+}
+
+.label.warning, .label.success, .label.alert, .success.button{
+    border-radius: 5px !important;
+}
+
+span < button:disabled{
+    background-color: #f7f7f7;
+}
+
+.new{
+    margin-bottom: 20px;
+}
+
+.success.label{
+    background-color: #57c785;
+}
+
+#logo1{
+    width: 150px;
+    margin-left: 35px;
+    margin-bottom: 25px;
+}
+
+#view-module{
+    width: calc( 100vw - 350px );
+}
+
+list-div{
+    overflow-x: auto;
+}

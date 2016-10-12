@@ -1,0 +1,79 @@
+<div id="puntos-retrieve" class="table" ng-if="showTable">
+    <div class="actions">
+        <span class="new success label"><button ng-click="new()">Nuevo</button></span>
+    </div>
+    <div class="list-div">
+        <table class="list">
+            <thead>
+                <th>Nombre</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in items">
+                    <td>{{i.nombre}}</td>
+                    <td>{{i.latitud}}</td>
+                    <td>{{i.longitud}}</td>
+                    <td>
+                        <span class="warning label"><button ng-click="edit(i)">Editar</button></span>
+                        <span class="alert label"><button ng-click="delete(i.id)">Eliminar</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="puntos-create" class="form" ng-if="showCreate && !darError()">
+    <form name="puntosCreateForm">
+        Nombre:
+        <input type="text" name="puntosCreateNombre" id="puntos-create-nombre" ng-model="puntoNuevo.nombre" ng-minlength="5" ng-maxlength="50" required>
+        <p ng-show="puntosCreateForm.puntosCreateNombre.$error.minlength" class="help-block" style="color:darkred;">Nombre demasiado corto</p>
+        <p ng-show="puntosCreateForm.puntosCreateNombre.$error.maxlength" class="help-block" style="color:darkred;">Nombre demasiado largo</p>
+        <p ng-show="puntosCreateForm.puntosCreateNombre.$error.required && !puntosCreateForm.puntosCreateNombre.$pristine" style="color:darkred;">Es necesario el nombre del punto</p>
+        Latitud:
+        <input type="number" name="puntosCreateLatitud" id="puntos-create-latitud" ng-model="puntoNuevo.latitud" required>
+        <p ng-show="puntosCreateForm.puntosCreateLatitud.$error.required && !puntosCreateForm.puntosCreateLatitud.$pristine" style="color:darkred;">Es necesaria una latitud</p>
+        <p ng-show="puntosUpdateForm.puntosUpdateLatitud.$error.maxlength && !puntosUpdateForm.puntosUpdateLatitud.$pristine" style="color:darkred;">Cantidad máxima de caracteres excedida</p>
+        Longitud:
+        <input type="number" name="puntosCreateLongitud" id="puntos-create-longitud" ng-model="puntoNuevo.longitud" required>
+        <p ng-show="puntosUpdateForm.puntosUpdateLongitud.$error.maxlength && !puntosUpdateForm.puntosUpdateLongitud.$pristine" style="color:darkred;">Cantidad máxima de caracteres excedida</p>
+        <p ng-show="puntosCreateForm.puntosCreateLongitud.$error.required && !puntosCreateForm.puntosCreateLongitud.$pristine" style="color:darkred;">Es necesaria una longitud</p>
+    </form>
+    <span class="success label"><button ng-click="create()" ng-disabled="puntosCreateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>
+
+
+<div id="puntos-update" class="form" ng-if="showUpdate && !darError()" >
+    <form name="puntosUpdateForm">
+        <input type="hidden" id="puntos-update-id" ng-model="puntoActual.id">
+        Nombre:
+        <input type="text" name="puntosUpdateNombre" id="puntos-update-nombre" ng-model="puntoActual.nombre" ng-minlength="5" ng-maxlength="50" required>
+        <p ng-show="puntosUpdateForm.puntosUpdateNombre.$error.minlength" class="help-block" style="color:darkred;">Nombre demasiado corto</p>
+        <p ng-show="puntosUpdateForm.puntosUpdateNombre.$error.maxlength" class="help-block" style="color:darkred;">Nombre demasiado largo</p>
+        <p ng-show="puntosUpdateForm.puntosUpdateNombre.$error.required && !puntosUpdateForm.puntosUpdateNombre.$pristine" style="color:darkred;">Es necesario el nombre del punto</p>
+        Latitud:
+        <input type="number" name="puntosUpdateLatitud" id="puntos-update-latitud" ng-model="puntoActual.latitud"
+               ng-maxlength="100" required>
+        <p ng-show="puntosUpdateForm.puntosUpdateLatitud.$error.required && !puntosUpdateForm.puntosUpdateLatitud.$pristine" style="color:darkred;">Es necesaria una latitud</p>
+        <p ng-show="puntosUpdateForm.puntosUpdateLatitud.$error.maxlength && !puntosUpdateForm.puntosUpdateLatitud.$pristine" style="color:darkred;">Cantidad máxima de caracteres excedida</p>
+        Longitud:
+        <input type="number" name="puntosUpdateLongitud" id="puntos-update-longitud" ng-model="puntoActual.longitud"
+               ng-maxlength="100" required>
+        <p ng-show="puntosUpdateForm.puntosUpdateLongitud.$error.required && !puntosUpdateForm.puntosUpdateLongitud.$pristine" style="color:darkred;">Es necesaria una longitud</p>
+        <p ng-show="puntosUpdateForm.puntosUpdateLongitud.$error.maxlength && !puntosUpdateForm.puntosUpdateLongitud.$pristine" style="color:darkred;">Cantidad máxima de caracteres excedida</p>
+    </form>
+    <span class="success label"><button ng-click="update()" ng-disabled="puntosUpdateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>
+
+<div ng-if="darError()" class="alert callout" data-closable>
+    <h5>¡Parece que ha ocurrido un error!</h5>
+    <p>{{error1}}</p>
+    <button ng-click="cerrarError()" class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

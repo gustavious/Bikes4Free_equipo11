@@ -1,0 +1,53 @@
+<div ng-hide="darError() && registerForm.$valid && submitted" id="register-form" class="form">
+    <form name="registerForm">
+        <input type="text" name="usuariosRegisterUser"  placeholder="Nombre de usuario"
+               id="usuarios-create-nombre" ng-model="usuarioNuevo.usuario" ng-minlength="5" ng-maxlength="50"
+               ng-focus="setEnFalso('envioUsuario'); setEnFalso('submitted')" required>
+        <p ng-show="registerForm.usuariosRegisterUser.$error.required && envioUsuario" style="color:darkred;">Por favor ingrese un nombre de usuario</p>
+        <p ng-show="registerForm.usuariosRegisterUser.$error.minlength && envioUsuario" style="color:darkred;">El nombre de usuario debe tener mínimo 5 caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterUser.$error.maxlength && envioUsuario" style="color:darkred;">El número máximo de caracteres para el nombre de usuario es 30</p>
+        <input type="password" placeholder="Contraseña" name="usuariosRegisterPass" ng-minlength="5" ng-maxlength="50"
+               id="usuarios-create-password" ng-model="usuarioNuevo.password " ng-focus="setEnFalso('envioPass');setEnFalso('submitted')" required>
+        <p ng-show="registerForm.usuariosRegisterPass.$error.minlength && envioPass" style="color:darkred;">La contraseña debe contener al menos 5 caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterPass.$error.maxlength && envioPass" style="color:darkred;">La contraseña no debe exceder los 30 caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterPass.$error.required && envioPass" style="color:darkred;">Debe ingresar una contraseña</p>
+        <input type="password" ng-model="confirmacion" name="usuariosRegisterConfirm" placeholder="Confirme su contraseña"
+               id="usuarios-confirm-password" ng-focus="setEnFalso('envioConfirmacion'); setEnFalso('submitted')" required>
+        <p ng-show="!mismaPassword(confirmacion) && envioConfirmacion" style="color:darkred;">Las contraseñas deben coincidir</p>
+        <input type="text" placeholder="Nombre" id="usuarios-create-nombre" ng-focus="setEnFalso('envioNombre');setEnFalso('submitted')"
+               name="usuariosRegisterName" ng-model="usuarioNuevo.nombre"  ng-maxlength="100" required>
+        <p ng-show="registerForm.usuariosRegisterName.$error.maxlength && envioNombre" style="color:darkred;">Ha excedido la cantidad máxima de caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterName.$error.required && envioNombre" style="color:darkred;">Debe ingresar su nombre</p>
+        <input type="text" placeholder="Apellido" id="usuarios-create-nombre" ng-model="usuarioNuevo.apellido"
+               name="usuariosRegisterApellido" ng-focus="setEnFalso('envioApellido'); setEnFalso('submitted')" ng-maxlength="100" required>
+        <p ng-show="registerForm.usuariosRegisterApellido.$error.maxlength && envioApellido" style="color:darkred;">Ha excedido la cantidad máxima de caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterApellido.$error.required && envioApellido" style="color:darkred;">Debe ingresar sus Apellidos</p>
+        <input type="email" placeholder="Email" id="usuarios-create-nombre" ng-model="usuarioNuevo.email"
+               name="usuariosRegisterMail" ng-focus="setEnFalso('envioMail'); setEnFalso('submitted')"  ng-maxlength="100" required>
+        <p ng-show="registerForm.usuariosRegisterMail.$error.maxlength && envioMail" style="color:darkred;">Ha excedido la cantidad máxima de caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterMail.$error.required && envioMail" style="color:darkred;">Debe ingresar el correo electrónico</p>
+        <p ng-show="registerForm.usuariosRegisterMail.$error.email && envioMail" style="color:darkred;">Por favor ingrese un email válido</p>
+        <input type="number" placeholder="Cédula" id="usuarios-create-nombre" ng-model="usuarioNuevo.cedula"
+               ng-focus="setEnFalso('envioId'); setEnFalso('submitted')" ng-maxlength="100" name="usuariosRegisterId" required>
+        <p ng-show="registerForm.usuariosRegisterId.$error.maxlength && envioId" style="color:darkred;">Ha excedido la cantidad máxima de caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterId.$error.required && envioId" style="color:darkred;">Debe ingresar su cédula</p>
+        <input type="number" placeholder="Teléfono" id="usuarios-create-descripcion" ng-model="usuarioNuevo.telefono"
+               ng-focus="setEnFalso('envioTelefono'); setEnFalso('submitted')" ng-maxlength="100" name="usuariosRegisterTel" required>
+        <p ng-show="registerForm.usuariosRegisterTel.$error.maxlength && envioTelefono" style="color:darkred;">Ha excedido la cantidad máxima de caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterTel.$error.required && envioTelefono" style="color:darkred;">Debe ingresar un teléfono</p>
+        <input type="text" placeholder="Dirección" id="usuarios-create-valor" ng-model="usuarioNuevo.direccion"
+               ng-focus="setEnFalso('envioDir'); setEnFalso('submitted')" ng-maxlength="100" name="usuariosRegisterDir" 
+               ng-keyup="$event.keyCode == 13 && create()"  required>
+        <p ng-show="registerForm.usuariosRegisterDir.$error.maxlength && envioDir" style="color:darkred;">Ha excedido la cantidad máxima de caracteres</p>
+        <p ng-show="registerForm.usuariosRegisterDir.$error.required && envioDir" style="color:darkred;">Debe ingresar su dirección</p>
+    </form>
+    <span id="registerbtn" class="success label" ><button ng-click="create()">Registrarse</button></span>
+</div>
+
+<div ng-if="darError() && registerForm.$valid && submitted" class="alert callout" data-closable>
+    <h5>¡Parece que ha ocurrido un error!</h5>
+    <p>{{error1}}</p>
+    <button ng-click="cerrarError()" class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
