@@ -14,6 +14,8 @@ angular.module('bikeApp.tipos', ['ngRoute']).config(['$routeProvider', function(
         $scope.showTable = true;
         $scope.showCreate = false;
         $scope.showUpdate = false;
+        $scope.hayError = false;
+        $scope.error1;
 
         //CREATE
         $scope.create = function(){
@@ -33,6 +35,8 @@ angular.module('bikeApp.tipos', ['ngRoute']).config(['$routeProvider', function(
                 }, function errorCallback(response) {
                     console.log('error');
                     $scope.tipoNuevo = {};
+                    $scope.hayError=true;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -45,6 +49,8 @@ angular.module('bikeApp.tipos', ['ngRoute']).config(['$routeProvider', function(
                 $scope.items = response.data;
             }, function errorCallback(response) {
                 console.log('error');
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
         };
@@ -85,6 +91,8 @@ angular.module('bikeApp.tipos', ['ngRoute']).config(['$routeProvider', function(
                     $scope.retrieve();       
                 }, function errorCallback(response) {
                     console.log('error');
+                    $scope.hayError=true;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -116,5 +124,18 @@ angular.module('bikeApp.tipos', ['ngRoute']).config(['$routeProvider', function(
             $scope.showUpdate = false;
             $scope.tipoNuevo = {};
         };
+        
+         $scope.cerrarError = function(  ){
+            
+            $scope.hayError = !$scope.hayError;
+            $scope.submitted=false;
+            
+           
+        };
+
+        $scope.darError = function(  ){
+            return $scope.hayError;
+        };
+
 
     }]);

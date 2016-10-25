@@ -11,7 +11,7 @@
                 <th>Punto Retorno</th>
                 <th>ID Bicicleta</th>
                 <th>Multa</th>
-                <th>Usuario Autorizado</th>
+                <!--<th>Usuario Autorizado</th>-->
 <!--                <th>Acciones</th>-->
             </thead>
             <tbody>
@@ -27,8 +27,8 @@
                     <td>{{i.bici.id}}</td>
                     <td ng-if="i.multa.valor != null">{{i.multa.valor}}</td>
                     <td ng-if="i.multa.valor == null">0</td>
-                    <td ng-if="i.autorizado.nombre != null && i.autorizado.apellido != null">{{i.autorizado.nombre}} {{i.autorizado.apellido}}</td>
-                    <td ng-if="i.autorizado.nombre == null && i.autorizado.apellido == null">Ninguno</td>
+                    <!--<td ng-if="i.autorizado.nombre != null && i.autorizado.apellido != null">{{i.autorizado.nombre}} {{i.autorizado.apellido}}</td>
+                    <td ng-if="i.autorizado.nombre == null && i.autorizado.apellido == null">Ninguno</td>-->
 <!--
                     <td>
                         <span class="warning label"><button ng-click="lend(i)">Registrar préstamo</button></span>
@@ -42,7 +42,7 @@
 </div>
 
 
-<div id="reservas-create" class="form" ng-if="showCreate && !darError()">
+<div id="reservas-create" class="form" ng-if="showCreate">
     <form name="reservaCreateForm" novalidate>
         Nombre:
         <input type="text" name="reservaCreateNombre" id="reservas-create-nombre"  ng-minlength="3" ng-maxlength = "30" ng-model="reservaNueva.nombre" required>

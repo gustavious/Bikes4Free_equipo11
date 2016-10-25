@@ -73,15 +73,15 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
                     $scope.usuarioNuevo = {};
                     $scope.confirmacion= "";
                     
-                      if(window.location.port)
-                      {
-                          window.location = "http://" + window.location.hostname + ":" + window.location.port + "/frontend/login.html";
-                      }
+                    if(window.location.port)
+                    {
+                          window.location = "http://" + window.location.hostname + ":" + window.location.port + "/login.html";
+                    }
 
-                     else
-                     {
-                         window.location = "http://" + window.location.hostname + "/frontend/login.html";
-                     }
+                    else
+                    {
+                         window.location = "http://" + window.location.hostname + "/login.html";
+                    }
 
                 }, function errorCallback(response) {
                     console.log('error');
@@ -237,12 +237,12 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
                     {
                          if(window.location.port)
                          {
-                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/frontend/admin.html";
+                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/admin.html";
                          }
 
                         else
                          {
-                            window.location = "http://" + window.location.hostname + "/frontend/admin.html";
+                            window.location = "http://" + window.location.hostname + "/admin.html";
                          }
                     }
                 
@@ -251,12 +251,12 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
                     {
                          if(window.location.port)
                          {
-                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/frontend/user.html";
+                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/user.html";
                          }
 
                         else
                          {
-                            window.location = "http://" + window.location.hostname + "/frontend/user.html";
+                            window.location = "http://" + window.location.hostname + "/user.html";
                          }
                     }
                 
@@ -264,12 +264,12 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
                     {
                          if(window.location.port)
                          {
-                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/frontend/funcionario.html";
+                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/funcionario.html";
                          }
 
                         else
                          {
-                            window.location = "http://" + window.location.hostname + "/frontend/funcionario.html";
+                            window.location = "http://" + window.location.hostname + "/funcionario.html";
                          }
                     }
                
@@ -287,11 +287,11 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
 
             if(window.location.port)
             {
-                window.location = "http://" + window.location.hostname + ":" + window.location.port + "/frontend/login.html";
+                window.location = "http://" + window.location.hostname + ":" + window.location.port + "/login.html";
             }
             else
             {
-                window.location = "http://" + window.location.hostname + "/frontend/login.html";
+                window.location = "http://" + window.location.hostname + "/login.html";
             }
 
             usuariosSvc.logout().then(function successCallback(response) {

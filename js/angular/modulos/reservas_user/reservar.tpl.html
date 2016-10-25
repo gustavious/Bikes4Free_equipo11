@@ -22,21 +22,22 @@
 </div>
 
 
-<div id="reservar-create" class="form" ng-if="showCreateReservar && !darError()">
+<div id="reservar-create" class="form" ng-if="showCreateReservar">
     <form name="reservarCreateForm" novalidate>
         Tipo de Bici:
         <select ng-model="selectedTipo.obj" ng-options="tipo.nombre for tipo in tipos">
         </select>
         Fecha:
-        <input type="date" ng-model="reservaNueva.fecha" required>
-        Autorizado:
-        <input type="text" ng-model="reservaNueva.autorizado">
+        <input type="datetime-local" ng-model="reservaNueva.fecha" required>
+        <!--Autorizado:
+        <input type="text" ng-model="reservaNueva.autorizado">-->
     </form>
     <span class="success label"><button ng-click="create()" ng-disabled="reservarCreateForm.$invalid">Reservar</button></span>
     <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
 </div>
 
-<div ng-if="darError()" class="alert callout" data-closable>
+
+<div ng-if="darError() && submitted" class="alert callout" data-closable>
     <h5>¡Parece que ha ocurrido un error!</h5>
     <p>{{error1}}</p>
     <button ng-click="cerrarError()" class="close-button" aria-label="Dismiss alert" type="button" data-close>

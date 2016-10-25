@@ -1,0 +1,62 @@
+<div id="reportes-retrieve" class="table" ng-if="showTable">
+    <div class="list-div">
+        <h4>Punto de préstamo más usado</h4>
+        <table class="list">
+            <thead>
+                <th>Nombre</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <!--<th>Usuario Autorizado</th>-->
+<!--                <th>Acciones</th>-->
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in items">
+                    <td>{{i.id}}</td>
+                    <td>{{i.usuario.nombre}} {{i.usuario.apellido}}</td>
+                    <td>{{i.fecha_reserva}}</td>
+                    <!--<td ng-if="i.autorizado.nombre != null && i.autorizado.apellido != null">{{i.autorizado.nombre}} {{i.autorizado.apellido}}</td>
+                    <td ng-if="i.autorizado.nombre == null && i.autorizado.apellido == null">Ninguno</td>-->
+<!--
+                    <td>
+                        <span class="warning label"><button ng-click="lend(i)">Registrar préstamo</button></span>
+                        <span class="alert label"><button ng-click="receive(i)">Registrar retorno</button></span>
+                    </td>
+-->
+                </tr>
+            </tbody>
+        </table>
+        
+        <br>
+        
+        <h4>Punto de retorno más usado</h4>
+        <table class="list">
+            <thead>
+                <th>Nombre</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <!--<th>Usuario Autorizado</th>-->
+<!--                <th>Acciones</th>-->
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in items">
+                    <td>{{i.id}}</td>
+                    <td>{{i.usuario.nombre}} {{i.usuario.apellido}}</td>
+                    <td>{{i.fecha_reserva}}</td>
+                    <!--<td ng-if="i.autorizado.nombre != null && i.autorizado.apellido != null">{{i.autorizado.nombre}} {{i.autorizado.apellido}}</td>
+                    <td ng-if="i.autorizado.nombre == null && i.autorizado.apellido == null">Ninguno</td>-->
+<!--
+                    <td>
+                        <span class="warning label"><button ng-click="lend(i)">Registrar préstamo</button></span>
+                        <span class="alert label"><button ng-click="receive(i)">Registrar retorno</button></span>
+                    </td>
+-->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <h4>Duración de préstamo más largo:</h4>
+    <p>{{duracion}}</p>
+    <h4>Horario frecuente:</h4>
+    <p>{{frecuente}}</p>
+</div>

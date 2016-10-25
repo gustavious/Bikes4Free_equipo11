@@ -1,0 +1,38 @@
+<div id="reservar-retrieve" class="table" ng-if="showTable && !calificar">
+    <div class="list-div">
+        <table class="list">
+            <thead>
+                <th>Nombre</th>
+                <th>Latitud</th>
+                <th>Longitud</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="punto in puntos">
+                    <td>{{punto.nombre}}</td>
+                    <td>{{punto.latitud}}</td>
+                    <td>{{punto.longitud}}</td>
+                    <td>
+                        <span class="success label"><button ng-click="calificar()">Calificar</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<div ng-if="calificar" class="alert callout" data-closable>
+    <h5>¿En escala de 1 - 5 qué tal le pareció el servicio?</h5>
+    <select ng-model="notaActual">
+        <option value="1star">1</option>
+        <option value="2star">2</option>
+        <option value="3star">3</option>
+        <option value="4star">4</option>
+        <option value="5star">5</option>
+    </select>
+    <span class="success label"><button ng-click="calificarPunto()">Calificar</button></span>
+    <span class="success label"><button ng-click="calificar()">Cancelar</button></span>
+</div>
+

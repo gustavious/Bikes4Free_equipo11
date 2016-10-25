@@ -38,7 +38,7 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
                     console.log('error');
                     $scope.multaNueva = {};
                     $scope.hayError = true;
-                    $scope.error1 = response.data.errorCode;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -53,7 +53,7 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
                 $scope.items = response.data;
             }, function errorCallback(response) {
                 $scope.hayError = true;
-                $scope.error1 = response.data.errorCode;
+                $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
         };
@@ -78,7 +78,7 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
                     $scope.showUpdate = false;
                 }, function errorCallback(response) {
                     $scope.hayError = true;
-                    $scope.error1 = response.data.errorCode;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -97,7 +97,7 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
                 }, function errorCallback(response) {
                     console.log('error');
                     $scope.hayError = true;
-                    $scope.error1 = response.data.errorCode;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }

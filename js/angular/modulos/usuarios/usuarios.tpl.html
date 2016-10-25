@@ -1,4 +1,10 @@
-<div id="multas-retrieve" class="table" ng-if="showTable">
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+    
+</script>
+<div id="example" class="table" ng-if="showTable">
     <div class="actions">
         <span class="new success label"><button ng-click="new()">Nuevo</button></span>
     </div>

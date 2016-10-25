@@ -55,3 +55,11 @@
     <span class="success label"><button ng-click="update()" ng-disabled="tiposUpdateForm.$invalid">Guardar</button></span>
     <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
 </div>
+
+<div ng-if="darError()" class="alert callout" data-closable>
+    <h5>¡Parece que ha ocurrido un error!</h5>
+    <p>{{error1}}</p>
+    <button ng-click="cerrarError()" class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

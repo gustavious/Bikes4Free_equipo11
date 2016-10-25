@@ -68,6 +68,13 @@ function reservasUserService($http, BACKEND, usuariosSvc) {
             url: BACKEND + 'tipos'
         });
     };
+    
+    self.getReportes = function(id_usuario){
+        return $http({
+            method: 'GET',
+            url: BACKEND + 'usuarios/' + id_usuario + '/masUsados/' 
+        });
+    };
 
 };
 

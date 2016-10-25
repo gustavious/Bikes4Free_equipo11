@@ -35,7 +35,7 @@ angular.module('bikeApp.reservasAdmin', ['ngRoute', 'checklist-model']).config([
                 console.log(response);
                 console.log('error');
                 $scope.hayError = true;
-                $scope.error1 = response.data;
+                $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
 
@@ -46,7 +46,7 @@ angular.module('bikeApp.reservasAdmin', ['ngRoute', 'checklist-model']).config([
                 console.log(response);
                 console.log('error');
                  $scope.hayError = true;
-                $scope.error1 = response.data;
+                $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
 
@@ -85,12 +85,12 @@ angular.module('bikeApp.reservasAdmin', ['ngRoute', 'checklist-model']).config([
                     $scope.showCreate = false;
                     $scope.showUpdate = false;
                     $scope.reservaActual = {};
-                    $scope.selectedMultas = [];
+                    $scope.selectedMultas = {};
                     $scope.selectedPunto = {};
                 }, function errorCallback(response) {
                     console.log('error');
                      $scope.hayError = true;
-                $scope.error1 = response.data;
+                $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -123,7 +123,7 @@ angular.module('bikeApp.reservasAdmin', ['ngRoute', 'checklist-model']).config([
                 }, function errorCallback(response) {
                     console.log('error');
                      $scope.hayError = true;
-                $scope.error1 = response.data;
+                $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }            

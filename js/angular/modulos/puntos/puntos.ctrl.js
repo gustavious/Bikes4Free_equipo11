@@ -38,7 +38,7 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
                     console.log('error');
                     $scope.puntoNuevo = {};
                     $scope.hayError = true;
-                    $scope.error1 = response.data.errorCode;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -52,7 +52,7 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
             }, function errorCallback(response) {
                 console.log('error');
                 $scope.hayError = true;
-                $scope.error1 = response.data.errorCode;
+                $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
         };
@@ -78,7 +78,7 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
                 }, function errorCallback(response) {
                     console.log('error');
                     $scope.hayError = true;
-                    $scope.error1 = response.data.errorCode;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -97,7 +97,7 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
                 }, function errorCallback(response) {
                     console.log('error');
                     $scope.hayError = true;
-                    $scope.error1 = response.data.errorCode;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }

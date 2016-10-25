@@ -88,6 +88,10 @@ var
 		return letter.toUpperCase();
 	};
 
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+    
 jQuery.fn = jQuery.prototype = {
 
 	// The current version of jQuery being used

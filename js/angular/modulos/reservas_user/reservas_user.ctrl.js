@@ -6,6 +6,17 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
         templateUrl: 'js/angular/modulos/reservas_user/reservas_user.tpl.html',
         controller: 'ReservasUserController'
     })
+    
+    .when('/reportes/user', {
+        templateUrl: 'js/angular/modulos/reservas_user/reportes_user.tpl.html',
+        controller: 'ReservasUserController'
+    })
+    
+    .when('/calificar/user', {
+        templateUrl: 'js/angular/modulos/reservas_user/calificar_user.tpl.html',
+        controller: 'ReservasUserController'
+    })
+    
         .when('/reservar', {
         templateUrl: 'js/angular/modulos/reservas_user/reservar.tpl.html',
         controller: 'ReservasUserController'
@@ -26,6 +37,11 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
         $scope.hayError = false;
         $scope.error1;
         $scope.idActual;
+        $scope.submitted=false;
+        $scope.duracion;
+        $scope.frecuente;
+        $scope.calificar = false;
+        $scope.notaActual = 0;
 
 
         //Cargar reservas del usuario
@@ -40,7 +56,8 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
             }, function errorCallback(response) {
                 console.log(response);
                 console.log('error');
-
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
         };
@@ -48,6 +65,27 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
         //TODO Descomentar cuando ya se tenga disponible el id del usuario
        $scope.retrieve();
         
+        //Cargar reservas del usuario
+        $scope.darReportes = function()
+        {
+            //TODO Poner id del usuario aquí
+            var id_usuario = authSvc.getId();
+            $scope.hayError = false;
+            reservasUserSvc.getReportes( id_usuario )
+                .then(function successCallback(response) {
+                $scope.lista = response.data;
+                }, 
+                
+                function errorCallback(response) {
+                console.log(response);
+                console.log('error');
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
+                //TODO Mostrar mensaje de error al usuario
+            });
+        };
+        
+        $scope.darReportes();
         
         //Cargar puntos y tipos de bicicleta
         $scope.cargar = function()
@@ -56,10 +94,12 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
             $scope.hayError = false;
             reservasUserSvc.getPuntos().then(function successCallback(response) {
                 $scope.puntos = response.data;
+                console.log(response.data);
             }, function errorCallback(response) {
                 console.log(response);
                 console.log('error');
-
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
             
@@ -69,6 +109,8 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
             }, function errorCallback(response) {
                 console.log(response);
                 console.log('error');
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
         };
@@ -82,11 +124,15 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
             //TODO Hacer validaciones y formar el JSON
 
             json.id_punto = $scope.puntoActual.id;
-            json.id_tipo = $scope.selectedTipo.obj.id;
+            console.log($scope.puntoActual.id);
+            json.id_tipo_bici = $scope.selectedTipo.obj.id;
+            console.log($scope.selectedTipo.obj.id);
             
             var fecha = $scope.reservaNueva.fecha;
             var fechaMS = fecha.getTime();
+            console.log(fechaMS);
             json.fecha = fechaMS;
+            $scope.submitted=true;
                         
             if($scope.reservaNueva.autorizado != "" && $scope.reservaNueva.autorizado != undefined){
                 json.autorizado = $scope.reservaNueva.autorizado;
@@ -94,7 +140,7 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
 
             //TODO Poner aquí el ID de usuario
             var id_usuario = authSvc.getId();
-            console.log(usuariosSvc.getIdUsuario());
+            console.log(authSvc.getId());
 
             console.log(json);
             
@@ -109,6 +155,9 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
                     $scope.selectedTipo = {};
                 }, function errorCallback(response) {
                     console.log('error');
+                    $scope.hayError=true;
+                    $scope.error1 = response.data.error;
+                  
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -132,6 +181,8 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
                     $scope.showUpdate = false;
                 }, function errorCallback(response) {
                     console.log('error');
+                    $scope.hayError=true;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -160,6 +211,7 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
             $scope.showTable = true;
             $scope.showCreate = false;
             $scope.showUpdate = false;
+            $scope.showCreateReservar = false;
             $scope.puntoActual = {};
         };
 
@@ -173,16 +225,23 @@ angular.module('bikeApp.reservasUser', ['ngRoute', 'bikeApp', 'bikeApp.usuarios'
         };
 
         $scope.cerrarError = function(  ){
-            console.log($scope.hayError);
+            
             $scope.hayError = !$scope.hayError;
-            console.log($scope.hayError);
+            $scope.submitted=false;
+            
+           
         };
 
         $scope.darError = function(  ){
             return $scope.hayError;
         };
 
-
-
-
+        $scope.calificar = function ( ){
+            $scope.calificar = !$scope.calificar;
+         };  
+        
+        $scope.calificarPunto = function ( ){
+            $window.localStorage['notaPunto'] = $scope.notaActual; 
+           
+        };
     }]);
