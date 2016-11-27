@@ -1,12 +1,8 @@
-<script>
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
-    
-</script>
 <div id="example" class="table" ng-if="showTable">
-    <div class="actions">
+    <div id="acciones" class="actions">
         <span class="new success label"><button ng-click="new()">Nuevo</button></span>
+        <span class="report label"><button ng-click="report()">Generar reporte general</button></span>
+        <span class="report label"><button ng-click="report_multas()">Generar reporte de multas</button></span>
     </div>
     <div class="list-div">
         <table class="list">

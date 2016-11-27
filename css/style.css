@@ -224,3 +224,7 @@ span < button:disabled{
 list-div{
     overflow-x: auto;
 }
+
+.report{
+    border-radius: 5px !important;
+}

@@ -102,6 +102,45 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
                 });
             }
         };
+        
+        //REPORTE
+        $scope.report = function(){
+            puntosSvc.retrieve().then(function successCallback(response) {
+                var d = response.data;
+                var csvContent = "data:text/csv;charset=ISO-8859-1,";
+
+                d.forEach(function(infoArray, index){
+                    if(index == 0){
+                        var inf = [];
+                        inf.push(" ")
+                        inf.push("Nombre");
+                        inf.push("Latitud");
+                        inf.push("Longitud");
+                        var dataString = Array.prototype.join.call(inf, ",");
+                        csvContent += index < d.length ? dataString+ "\n" : dataString;
+                    }
+                    var inf = [];
+                    inf.push(index)
+                    inf.push(infoArray.nombre);
+                    inf.push(infoArray.latitud);
+                    inf.push(infoArray.longitud);
+                    var dataString = Array.prototype.join.call(inf, ",");
+                    csvContent += index < d.length ? dataString+ "\n" : dataString;
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "puntos_atencion.csv");
+                document.getElementById("acciones").appendChild(link);
+                link.click();
+
+            }, function errorCallback(response) {
+                console.log('error');
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
+            });
+        }
 
 
         //Editar

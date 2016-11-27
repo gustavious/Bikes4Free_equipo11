@@ -12,10 +12,10 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
         templateUrl: 'js/angular/modulos/usuarios/register.tpl.html',
         controller: 'UsuariosController'
     }).otherwise({
-            redirectTo:'/login'
-        });
+        redirectTo:'/login'
+    });
 }])
- .constant('BACKEND', 'http://b4f2.herokuapp.com/webresources/')
+    .constant('BACKEND', 'http://b4f2.herokuapp.com/webresources/')
     .controller('UsuariosController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'usuariosSvc','authSvc', function($scope, $rootScope, $http, $location, $routeParams, usuariosSvc, authSvc){
 
         $scope.usuarioActual = {};
@@ -38,7 +38,7 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
         $scope.envioConfirmacion = false;
         $scope.confirmacion = "";
         $scope.submitted=false;
-        
+
         //CREATE
         $scope.create = function(){
             var json = {};
@@ -72,15 +72,15 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
                     $scope.submitted = false;
                     $scope.usuarioNuevo = {};
                     $scope.confirmacion= "";
-                    
+
                     if(window.location.port)
                     {
-                          window.location = "http://" + window.location.hostname + ":" + window.location.port + "/login.html";
+                        window.location = "http://" + window.location.hostname + ":" + window.location.port + "/login.html";
                     }
 
                     else
                     {
-                         window.location = "http://" + window.location.hostname + "/login.html";
+                        window.location = "http://" + window.location.hostname + "/login.html";
                     }
 
                 }, function errorCallback(response) {
@@ -97,7 +97,7 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
         //RETRIEVE
         $scope.retrieve = function(){
             usuariosSvc.retrieve().then(function successCallback(response) {
-                
+
                 $scope.items = response.data;
             }, function errorCallback(response) {
                 console.log('error');
@@ -106,7 +106,7 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
                 //TODO Mostrar mensaje de error al usuario
             });
         };
-        
+
         $scope.retrieve();
 
 
@@ -173,6 +173,120 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
             }
         };
 
+        //REPORTE
+        $scope.report = function(){
+            usuariosSvc.retrieve().then(function successCallback(response) {
+                var d = response.data;
+                var csvContent = "data:text/csv;charset=ISO-8859-1,";
+
+                d.forEach(function(infoArray, index){
+                    if(index == 0){
+                        var inf = [];
+                        inf.push(" ")
+                        inf.push("Usuario");
+                        inf.push("Nombre");
+                        inf.push("Apellido");
+                        inf.push("Email");
+                        inf.push("Cedula");
+                        inf.push("Telefono");
+                        inf.push("Direccion");
+                        inf.push("Puntos totales");
+                        var dataString = Array.prototype.join.call(inf, ",");
+                        csvContent += index < d.length ? dataString+ "\n" : dataString;
+                    }
+                    var inf = [];
+                    inf.push(index)
+                    inf.push(infoArray.usuario);
+                    inf.push(infoArray.nombre);
+                    inf.push(infoArray.apellido);
+                    inf.push(infoArray.email);
+                    inf.push(infoArray.cedula);
+                    inf.push(infoArray.telefono);
+                    inf.push(infoArray.direccion);
+                    inf.push(infoArray.puntos);
+                    var dataString = Array.prototype.join.call(inf, ",");
+                    csvContent += index < d.length ? dataString+ "\n" : dataString;
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "usuarios.csv");
+                document.getElementById("acciones").appendChild(link);
+                link.click();
+
+            }, function errorCallback(response) {
+                console.log('error');
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
+            });
+        }
+
+
+        //REPORTE DE MULTAS
+        $scope.report_multas = function(){
+            usuariosSvc.retrieve().then(function successCallback(response) {
+                var d = response.data;
+                var csvContent = "data:text/csv;charset=ISO-8859-1,";
+
+                d.forEach(function(infoArray, index){
+                    if(index == 0){
+                        var inf = [];
+                        inf.push(" ")
+                        inf.push("Usuario");
+                        inf.push("Nombre");
+                        inf.push("Apellido");
+                        inf.push("Email");
+                        inf.push("Cedula");
+                        inf.push("Telefono");
+                        inf.push("Direccion");
+                        inf.push("Puntos totales");
+                        inf.push("Multas");
+                        var dataString = Array.prototype.join.call(inf, ",");
+                        csvContent += index < d.length ? dataString+ "\n" : dataString;
+                    }
+                    var inf = [];
+                    inf.push(index)
+                    inf.push(infoArray.usuario);
+                    inf.push(infoArray.nombre);
+                    inf.push(infoArray.apellido);
+                    inf.push(infoArray.email);
+                    inf.push(infoArray.cedula);
+                    inf.push(infoArray.telefono);
+                    
+                    var dire = infoArray.direccion;
+                    dire = dire.split(',').join(' ');
+                    inf.push(dire);
+                    
+                    inf.push(infoArray.puntos);
+
+                    var m = infoArray.multas;
+                    if( m != null ){
+                        for( var i = 0; i < m.length; i++ ){
+                            inf.push(m[i].nombre + ": " + m[i].valor);
+                        }
+                    } else {
+                        inf.push("Ninguna");
+                    }
+
+                    var dataString = Array.prototype.join.call(inf, ",");
+                    csvContent += index < d.length ? dataString+ "\n" : dataString;
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "usuarios.csv");
+                document.getElementById("acciones").appendChild(link);
+                link.click();
+
+            }, function errorCallback(response) {
+                console.log('error');
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
+            });
+        }
+
 
         //Editar
         $scope.edit = function( item ){
@@ -198,7 +312,7 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
             $scope.showUpdate = false;
             $scope.usuarioNuevo = {};
         };
-        
+
         //Confirma que al registrarse la contraseña y la confirmación de contraseña sean las mismas
         $scope.mismaPassword = function( confirmacion ){
             console.log(confirmacion);
@@ -220,66 +334,66 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
         $scope.changeLoggued = function(  ){
             $scope.loggued = !$scope.loggued;
         };
-        
+
         //Login
         $scope.login = function( ){
             $scope.submitted=true;
             usuariosSvc.login($scope.usuarioNuevo.usuario, $scope.usuarioNuevo.password).then(function successCallback(response) {
-                
+
                 $scope.usuariologueado = response.data.usuario;
                 authSvc.saveId(response.data.usuario.id);
                 authSvc.saveToken(response.data.token);
                 console.log(authSvc.getId());
                 $scope.hayError=false;
                 $scope.loggued = true;
-                
-                    if(angular.equals($scope.usuariologueado.rol.descripcion, "ADMINISTRADOR"))
-                    {
-                         if(window.location.port)
-                         {
-                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/admin.html";
-                         }
 
-                        else
-                         {
-                            window.location = "http://" + window.location.hostname + "/admin.html";
-                         }
-                    }
-                
-                    
-                    else if(angular.equals($scope.usuariologueado.rol.descripcion, "USUARIO"))
+                if(angular.equals($scope.usuariologueado.rol.descripcion, "ADMINISTRADOR"))
+                {
+                    if(window.location.port)
                     {
-                         if(window.location.port)
-                         {
-                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/user.html";
-                         }
-
-                        else
-                         {
-                            window.location = "http://" + window.location.hostname + "/user.html";
-                         }
+                        window.location = "http://" + window.location.hostname + ":" + window.location.port + "/admin.html";
                     }
-                
-                    else if(angular.equals($scope.usuariologueado.rol.descripcion, "FUNCIONARIO"))
+
+                    else
                     {
-                         if(window.location.port)
-                         {
-                            window.location = "http://" + window.location.hostname + ":" + window.location.port + "/funcionario.html";
-                         }
-
-                        else
-                         {
-                            window.location = "http://" + window.location.hostname + "/funcionario.html";
-                         }
+                        window.location = "http://" + window.location.hostname + "/admin.html";
                     }
-               
+                }
+
+
+                else if(angular.equals($scope.usuariologueado.rol.descripcion, "USUARIO"))
+                {
+                    if(window.location.port)
+                    {
+                        window.location = "http://" + window.location.hostname + ":" + window.location.port + "/user.html";
+                    }
+
+                    else
+                    {
+                        window.location = "http://" + window.location.hostname + "/user.html";
+                    }
+                }
+
+                else if(angular.equals($scope.usuariologueado.rol.descripcion, "FUNCIONARIO"))
+                {
+                    if(window.location.port)
+                    {
+                        window.location = "http://" + window.location.hostname + ":" + window.location.port + "/funcionario.html";
+                    }
+
+                    else
+                    {
+                        window.location = "http://" + window.location.hostname + "/funcionario.html";
+                    }
+                }
+
             }, function errorCallback(response) {
                 $scope.hayError=true;
                 $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
         };
-        
+
         //Logout
         $scope.logout = function( ){
 
@@ -296,7 +410,7 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
 
             usuariosSvc.logout().then(function successCallback(response) {
                 $scope.loggued = false;
-                
+
             }, function errorCallback(response) {
                 console.log('error');
                 //TODO Mostrar mensaje de error al usuario
@@ -359,12 +473,12 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
             {
                 $scope.envioConfirmacion = false;
             }
-            
+
             else if(angular.equals(enviado, "submitted"))
             {
                 $scope.submitted = false;
             }
-            
+
         };
 
     }]);

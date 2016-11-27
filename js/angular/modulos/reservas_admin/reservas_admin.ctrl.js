@@ -45,7 +45,7 @@ angular.module('bikeApp.reservasAdmin', ['ngRoute', 'checklist-model']).config([
             }, function errorCallback(response) {
                 console.log(response);
                 console.log('error');
-                 $scope.hayError = true;
+                $scope.hayError = true;
                 $scope.error1 = response.data.error;
                 //TODO Mostrar mensaje de error al usuario
             });
@@ -56,12 +56,87 @@ angular.module('bikeApp.reservasAdmin', ['ngRoute', 'checklist-model']).config([
             }, function errorCallback(response) {
                 console.log(response);
                 console.log('error');
-                 $scope.hayError = true;
+                $scope.hayError = true;
                 $scope.error1 = response.data;
                 //TODO Mostrar mensaje de error al usuario
             });
         };
         $scope.retrieve();
+
+        //REPORTE
+        $scope.report = function(){
+            reservasAdminSvc.retrieve().then(function successCallback(response) {
+                var d = response.data;
+                var csvContent = "data:text/csv;charset=ISO-8859-1,";
+
+                d.forEach(function(infoArray, index){
+                    if(index == 0){
+                        var inf = [];
+                        inf.push(" ")
+                        inf.push("ID");
+                        inf.push("Usuario");
+                        inf.push("Estado");
+                        inf.push("Fecha Reserva");
+                        inf.push("Fecha Entrega");
+                        inf.push("Tiempo Reserva");
+                        inf.push("Punto Prestamo");
+                        inf.push("Punto Retorno");
+                        inf.push("ID Bicicleta");
+                        inf.push("Multa");
+                        inf.push("Usuario Autorizado");
+                        var dataString = Array.prototype.join.call(inf, ",");
+                        csvContent += index < d.length ? dataString+ "\n" : dataString;
+                    }
+                    var inf = [];
+                    inf.push(index)
+                    inf.push(infoArray.id);
+                    inf.push(infoArray.usuario.nombre + " " + infoArray.usuario.apellido);
+                    inf.push(infoArray.estado);
+                    var freserva = new Date(infoArray.fecha_reserva);
+                    inf.push(freserva);
+                    if( infoArray.fecha_entrega != null ){
+                        var fentrega = new Date(infoArray.fecha_entrega);
+                        inf.push(fentrega);
+                    } else {
+                        inf.push("No ha sido retornada")
+                    }
+                    var tiempo = Math.floor( (infoArray.tiempo / 1000) * (1/60) * (1/60)  );
+                    inf.push(tiempo + " horas");
+                    inf.push(infoArray.puntoPrestamo.nombre);
+                    if (infoArray.puntoRetorno != null){
+                        inf.push(infoArray.puntoRetorno.nombre);
+                    } else {
+                        inf.push("No ha sido retornada");
+                    }
+                    inf.push(infoArray.bici.id);
+                    if (infoArray.multa != null){
+                        inf.push(infoArray.multa.valor);
+                    } else {
+                        inf.push("0");
+                    }
+                    if (infoArray.autorizado != null){
+                        inf.push(infoArray.autorizado.nombre + " " + infoArray.autorizado.apellido);
+                    } else {
+                        inf.push("Ninguno");
+                    }
+
+                    var dataString = Array.prototype.join.call(inf, ",");
+                    csvContent += index < d.length ? dataString+ "\n" : dataString;
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "reservas.csv");
+                document.getElementById("acciones").appendChild(link);
+                link.click();
+
+            }, function errorCallback(response) {
+                console.log('error');
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
+            });
+        }
 
 
         //Registrar retorno
@@ -89,8 +164,8 @@ angular.module('bikeApp.reservasAdmin', ['ngRoute', 'checklist-model']).config([
                     $scope.selectedPunto = {};
                 }, function errorCallback(response) {
                     console.log('error');
-                     $scope.hayError = true;
-                $scope.error1 = response.data.error;
+                    $scope.hayError = true;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }
@@ -122,8 +197,8 @@ angular.module('bikeApp.reservasAdmin', ['ngRoute', 'checklist-model']).config([
                     $scope.reservaActual = {};
                 }, function errorCallback(response) {
                     console.log('error');
-                     $scope.hayError = true;
-                $scope.error1 = response.data.error;
+                    $scope.hayError = true;
+                    $scope.error1 = response.data.error;
                     //TODO Mostrar mensaje de error al usuario
                 });
             }            

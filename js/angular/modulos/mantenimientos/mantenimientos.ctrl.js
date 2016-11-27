@@ -1,60 +1,68 @@
 'use strict';
 
-angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function($routeProvider){
+angular.module('bikeApp.mantenimientos', ['ngRoute']).config(['$routeProvider', function($routeProvider){
     $routeProvider
-        .when('/multas', {
-            templateUrl: 'js/angular/modulos/multas/multas.tpl.html',
-            controller: 'MultasController'
-        });
+        .when('/mantenimientos', {
+        templateUrl: 'js/angular/modulos/mantenimientos/mantenimientos.tpl.html',
+        controller: 'MantenimientosController'
+    });
 }])
-    .controller('MultasController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'multasSvc', function($scope, $rootScope, $http, $location, $routeParams, multasSvc){
+    .controller('MantenimientosController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'mantenimientosSvc', function($scope, $rootScope, $http, $location, $routeParams, mantenimientosSvc){
 
-        $scope.multaActual = {};
-        $scope.multaNueva = {};
+        $scope.estados = [
+            {nombre: "En curso", value: "EN_CURSO"},
+            {nombre: "Finalizado", value: "FINALIZADO"}
+        ];
+        
+        $scope.tipos = [
+            {nombre: "Daño", value: "DAÑO"},
+            {nombre: "Violación", value: "VIOLACION"},
+            {nombre: "Irregularidad", value:"IRREGULARIDAD"}
+        ]
+        
+        $scope.selectedTipo = {};
+        $scope.selectedEstado = {};
+        $scope.mantenimientoActual = {};
+        $scope.mantenimientoNuevo = {};
         $scope.showTable = true;
         $scope.showCreate = false;
         $scope.showUpdate = false;
-        $scope.invalido = false;
         $scope.hayError = false;
         $scope.error1;
 
         //CREATE
         $scope.create = function(){
             var json = {};
-            //TODO Hacer validaciones y formar el JSON
 
-            json.nombre = $scope.multaNueva.nombre;
-            json.descripcion = $scope.multaNueva.descripcion;
-            json.valor = $scope.multaNueva.valor;
+            json.id_bici = $scope.mantenimientoNuevo.id_bici;
+            json.descripcion = $scope.mantenimientoNuevo.descripcion;
+            json.tipo = $scope.mantenimientoNuevo.tipo;
 
             if(json !== {}){
-                multasSvc.create(json).then(function successCallback(response) {
+                mantenimientosSvc.create(json).then(function successCallback(response) {
                     $scope.retrieve();
                     $scope.showTable = true;
                     $scope.showCreate = false;
                     $scope.showUpdate = false;
-                    $scope.multaNueva = {};
+                    $scope.mantenimientoNuevo = {};
                 }, function errorCallback(response) {
                     console.log('error');
-                    $scope.multaNueva = {};
-                    $scope.hayError = true;
+                    $scope.mantenimientoNuevo = {};
+                    $scope.hayError=true;
                     $scope.error1 = response.data.error;
-                    //TODO Mostrar mensaje de error al usuario
                 });
             }
         };
 
 
         //RETRIEVE
-        $scope.retrieve = function()
-        {
-            $scope.hayError = false;
-            multasSvc.retrieve().then(function successCallback(response) {
+        $scope.retrieve = function(){
+            mantenimientosSvc.retrieve().then(function successCallback(response) {
                 $scope.items = response.data;
             }, function errorCallback(response) {
-                $scope.hayError = true;
+                console.log('error');
+                $scope.hayError=true;
                 $scope.error1 = response.data.error;
-                //TODO Mostrar mensaje de error al usuario
             });
         };
         $scope.retrieve();
@@ -63,23 +71,19 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
         //UPDATE
         $scope.update = function(){
             var json = {};
-            //TODO Hacer validaciones y formar el JSON
 
-            json.id = $scope.multaActual.id;
-            json.nombre = $scope.multaActual.nombre;
-            json.descripcion = $scope.multaActual.descripcion;
-            json.valor = $scope.multaActual.valor;
+            json.id_bici = $scope.mantenimientoNuevo.id_bici;
+            json.descripcion = $scope.mantenimientoNuevo.descripcion;
+            json.tipo = $scope.mantenimientoNuevo.tipo;
 
             if(json !== {}){
-                multasSvc.update(json).then(function successCallback(response) {
+                mantenimientosSvc.update(json).then(function successCallback(response) {
                     $scope.retrieve();
                     $scope.showTable = true;
                     $scope.showCreate = false;
                     $scope.showUpdate = false;
                 }, function errorCallback(response) {
-                    $scope.hayError = true;
-                    $scope.error1 = response.data.error;
-                    //TODO Mostrar mensaje de error al usuario
+                    console.log('error');
                 });
             }
         };
@@ -88,24 +92,22 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
         //DELETE
         $scope.delete = function( id ){
 
-            //TODO Poner esto de la confirmación más lindo
-            var con = confirm("Está seguro de que quiere eliminar el elemento con id: " + id + "?");
+            var con = confirm("Está seguro de que quiere eliminar la solicitud de mantenimiento con id: " + id + "?");
 
             if( con == true ){
-                multasSvc.delete(id).then(function successCallback(response) {
-                    $scope.retrieve();
+                mantenimientosSvc.delete(id).then(function successCallback(response) {
+                    $scope.retrieve();       
                 }, function errorCallback(response) {
                     console.log('error');
-                    $scope.hayError = true;
+                    $scope.hayError=true;
                     $scope.error1 = response.data.error;
-                    //TODO Mostrar mensaje de error al usuario
                 });
             }
         };
         
         //REPORTE
         $scope.report = function(){
-            multasSvc.retrieve().then(function successCallback(response) {
+            mantenimientosSvc.retrieve().then(function successCallback(response) {
                 var d = response.data;
                 var csvContent = "data:text/csv;charset=ISO-8859-1,";
 
@@ -113,23 +115,17 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
                     if(index == 0){
                         var inf = [];
                         inf.push(" ")
+                        inf.push("ID");
                         inf.push("Nombre");
-                        inf.push("Descripcion");
-                        inf.push("Valor");
-                        inf.push("Editable");
+                        inf.push("Descripción");
                         var dataString = Array.prototype.join.call(inf, ",");
                         csvContent += index < d.length ? dataString+ "\n" : dataString;
                     }
                     var inf = [];
                     inf.push(index)
+                    inf.push(infoArray.id);
                     inf.push(infoArray.nombre);
                     inf.push(infoArray.descripcion);
-                    inf.push(infoArray.valor);
-                    if( infoArray.editable ){
-                        inf.push("Si");
-                    }else {
-                        inf.push("No");
-                    }
                     var dataString = Array.prototype.join.call(inf, ",");
                     csvContent += index < d.length ? dataString+ "\n" : dataString;
                 });
@@ -137,7 +133,7 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
                 var encodedUri = encodeURI(csvContent);
                 var link = document.createElement("a");
                 link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "tipos_multas.csv");
+                link.setAttribute("download", "solicitudes_mantenimiento.csv");
                 document.getElementById("acciones").appendChild(link);
                 link.click();
 
@@ -154,7 +150,7 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
             $scope.showTable = false;
             $scope.showCreate = false;
             $scope.showUpdate = true;
-            $scope.multaActual = item;
+            $scope.mantenimientoActual = item;
         };
 
 
@@ -163,7 +159,7 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
             $scope.showTable = false;
             $scope.showCreate = true;
             $scope.showUpdate = false;
-            $scope.multaNueva = {};
+            $scope.mantenimientoNuevo = {};
         };
 
 
@@ -172,29 +168,20 @@ angular.module('bikeApp.multas', ['ngRoute']).config(['$routeProvider', function
             $scope.showTable = true;
             $scope.showCreate = false;
             $scope.showUpdate = false;
-            $scope.multaNueva = {};
+            $scope.mantenimientoNuevo = {};
         };
-
-        /**
-         *  Método que se encarga de validar si el form es válido.
-         *  Se define que el form es válido si todos los campos han sido llenados correctamente.
-         *  En caso de que esto no se cumpla el campo invalido del $Scope se volverá true.
-         */
-        $scope.isValid = function(  ){
-            return $scope.invalido;
-        };
-
-        $scope.cerrarError = function(  ){
-            console.log($scope.hayError);
+        
+         $scope.cerrarError = function(  ){
+            
             $scope.hayError = !$scope.hayError;
-            console.log($scope.hayError);
+            $scope.submitted=false;
+            
+           
         };
 
         $scope.darError = function(  ){
             return $scope.hayError;
         };
-
-
 
 
     }]);

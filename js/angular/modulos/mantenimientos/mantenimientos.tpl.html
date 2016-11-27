@@ -1,0 +1,78 @@
+<div id="mantenimientos-retrieve" class="table" ng-if="showTable">
+    <div id="acciones" class="actions">
+        <span class="new success label"><button ng-click="new()">Nuevo</button></span>
+        <span class="report label"><button ng-click="report()">Generar reporte</button></span>
+    </div>
+    <div class="list-div">
+        <table class="list">
+            <thead>
+                <th>ID solicitud</th>
+                <th>Estado</th>
+                <th>ID bicicleta</th>
+                <th>Tipo</th>
+                <th>Fecha</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="i in items">
+                    <td>{{i.id}}</td>
+                    <td>{{i.estado}}</td>
+                    <td>{{i.id_bici}}</td>
+                    <td>{{i.tipo}}</td>
+                    <td>{{i.fecha | date:'medium'}}</td>
+                    <td>{{i.descripcion}}</td>
+                    <td>
+                        <span class="warning label"><button ng-click="edit(i)">Editar</button></span>
+                        <span class="alert label"><button ng-click="delete(i.id)">Eliminar</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div id="mantenimientos-create" class="form" ng-if="showCreate">
+    <form name="mantenimientosCreateForm">
+        ID Bicicleta:
+        <input name="mantenimientosCreateBici" type="text" id="mantenimientos-create-idbici" ng-model="mantenimientoNuevo.id_bici" ng-maxlength="10" required>
+        <p ng-show="mantenimientosCreateForm.mantenimientosCreateBici.$error.required && !mantenimientosCreateForm.mantenimientosCreateBici.$pristine" style="color:darkred;">Es necesario un id de bicicleta para enviar la solicitud</p>
+        Descripción:
+        <input name="mantenimientosCreateDesc" type="text" id="mantenimientos-create-descripcion" ng-model="mantenimientoNuevo.descripcion" ng-maxlength="250">
+        <p ng-show="mantenimientosCreateForm.mantenimientosCreateDesc.$error.maxlength" class="help-block" style="color:darkred;">Descripción demasiado larga</p>
+        Tipo:
+        <select ng-model="selectedTipo.obj" ng-options="tipo.nombre for tipo in tipos" required>
+        </select>
+    </form>
+    <span class="success label"><button ng-click="create()" ng-disabled="mantenimientosCreateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>
+
+
+<div id="mantenimientos-update" class="form" ng-if="showUpdate">
+    <form name="mantenimientosUpdateForm">
+        <input type="hidden" id="mantenimientos-update-id" ng-model="mantenimientoActual.id">
+        ID Bicicleta:
+        <input name="mantenimientosUpdateBici" type="text" id="mantenimientos-update-idbici" ng-model="mantenimientoActual.id_bici" ng-maxlength="10" readonly>
+        Descripción:
+        <input name="mantenimientosUpdateDesc" type="text" id="mantenimientos-update-descripcion" ng-model="mantenimientoActual.descripcion" ng-maxlength="250">
+        <p ng-show="mantenimientosUpdateForm.mantenimientosUpdateDesc.$error.maxlength" class="help-block" style="color:darkred;">Descripción demasiado larga</p>
+        Tipo:
+        <select ng-model="mantenimientoActual.tipo" ng-options="tipo.nombre for tipo in tipos" required>
+        </select>
+        Estado:
+        <select ng-model="mantenimientoActual.estado" ng-options="estado.nombre for estado in estados" required>
+        </select>
+    </form>
+    <span class="success label"><button ng-click="update()" ng-disabled="tiposUpdateForm.$invalid">Guardar</button></span>
+    <span class="success label"><button ng-click="cancel()">Cancelar</button></span>
+</div>
+
+<div ng-if="darError()" class="alert callout" data-closable>
+    <h5>¡Parece que ha ocurrido un error!</h5>
+    <p>{{error1}}</p>
+    <button ng-click="cerrarError()" class="close-button" aria-label="Dismiss alert" type="button" data-close>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

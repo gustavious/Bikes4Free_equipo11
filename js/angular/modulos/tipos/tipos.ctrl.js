@@ -99,6 +99,46 @@ angular.module('bikeApp.tipos', ['ngRoute']).config(['$routeProvider', function(
         };
 
 
+        //REPORTE
+        $scope.report = function(){
+            tiposSvc.retrieve().then(function successCallback(response) {
+                var d = response.data;
+                var csvContent = "data:text/csv;charset=ISO-8859-1,";
+
+                d.forEach(function(infoArray, index){
+                    if(index == 0){
+                        var inf = [];
+                        inf.push(" ")
+                        inf.push("ID");
+                        inf.push("Nombre");
+                        inf.push("Descripción");
+                        var dataString = Array.prototype.join.call(inf, ",");
+                        csvContent += index < d.length ? dataString+ "\n" : dataString;
+                    }
+                    var inf = [];
+                    inf.push(index)
+                    inf.push(infoArray.id);
+                    inf.push(infoArray.nombre);
+                    inf.push(infoArray.descripcion);
+                    var dataString = Array.prototype.join.call(inf, ",");
+                    csvContent += index < d.length ? dataString+ "\n" : dataString;
+                });
+
+                var encodedUri = encodeURI(csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "tipos_bicicleta.csv");
+                document.getElementById("acciones").appendChild(link);
+                link.click();
+
+            }, function errorCallback(response) {
+                console.log('error');
+                $scope.hayError=true;
+                $scope.error1 = response.data.error;
+            });
+        }
+
+
         //Editar
         $scope.edit = function( item ){
             $scope.showTable = false;
@@ -124,13 +164,13 @@ angular.module('bikeApp.tipos', ['ngRoute']).config(['$routeProvider', function(
             $scope.showUpdate = false;
             $scope.tipoNuevo = {};
         };
-        
-         $scope.cerrarError = function(  ){
-            
+
+        $scope.cerrarError = function(  ){
+
             $scope.hayError = !$scope.hayError;
             $scope.submitted=false;
-            
-           
+
+
         };
 
         $scope.darError = function(  ){
