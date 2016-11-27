@@ -42,7 +42,7 @@
         <input name="mantenimientosCreateDesc" type="text" id="mantenimientos-create-descripcion" ng-model="mantenimientoNuevo.descripcion" ng-maxlength="250">
         <p ng-show="mantenimientosCreateForm.mantenimientosCreateDesc.$error.maxlength" class="help-block" style="color:darkred;">Descripción demasiado larga</p>
         Tipo:
-        <select ng-model="selectedTipo.obj" ng-options="tipo.nombre for tipo in tipos" required>
+        <select ng-model="mantenimientoNuevo.tipo" ng-options="tipo.nombre for tipo in tipos" required>
         </select>
     </form>
     <span class="success label"><button ng-click="create()" ng-disabled="mantenimientosCreateForm.$invalid">Guardar</button></span>

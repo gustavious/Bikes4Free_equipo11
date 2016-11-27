@@ -13,13 +13,13 @@ angular.module('bikeApp.mantenimientos', ['ngRoute']).config(['$routeProvider', 
             {nombre: "En curso", value: "EN_CURSO"},
             {nombre: "Finalizado", value: "FINALIZADO"}
         ];
-        
+
         $scope.tipos = [
             {nombre: "Daño", value: "DAÑO"},
             {nombre: "Violación", value: "VIOLACION"},
             {nombre: "Irregularidad", value:"IRREGULARIDAD"}
         ]
-        
+
         $scope.selectedTipo = {};
         $scope.selectedEstado = {};
         $scope.mantenimientoActual = {};
@@ -36,7 +36,9 @@ angular.module('bikeApp.mantenimientos', ['ngRoute']).config(['$routeProvider', 
 
             json.id_bici = $scope.mantenimientoNuevo.id_bici;
             json.descripcion = $scope.mantenimientoNuevo.descripcion;
-            json.tipo = $scope.mantenimientoNuevo.tipo;
+            json.tipo = $scope.mantenimientoNuevo.tipo.value;
+
+            console.log(json);
 
             if(json !== {}){
                 mantenimientosSvc.create(json).then(function successCallback(response) {
@@ -96,7 +98,7 @@ angular.module('bikeApp.mantenimientos', ['ngRoute']).config(['$routeProvider', 
 
             if( con == true ){
                 mantenimientosSvc.delete(id).then(function successCallback(response) {
-                    $scope.retrieve();       
+                    $scope.retrieve();
                 }, function errorCallback(response) {
                     console.log('error');
                     $scope.hayError=true;
@@ -104,7 +106,7 @@ angular.module('bikeApp.mantenimientos', ['ngRoute']).config(['$routeProvider', 
                 });
             }
         };
-        
+
         //REPORTE
         $scope.report = function(){
             mantenimientosSvc.retrieve().then(function successCallback(response) {
@@ -170,13 +172,13 @@ angular.module('bikeApp.mantenimientos', ['ngRoute']).config(['$routeProvider', 
             $scope.showUpdate = false;
             $scope.mantenimientoNuevo = {};
         };
-        
+
          $scope.cerrarError = function(  ){
-            
+
             $scope.hayError = !$scope.hayError;
             $scope.submitted=false;
-            
-           
+
+
         };
 
         $scope.darError = function(  ){
