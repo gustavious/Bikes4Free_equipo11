@@ -148,7 +148,7 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
             $scope.showTable = false;
             $scope.showCreate = false;
             $scope.showUpdate = true;
-            $scope.tipo = item;
+            $scope.puntoActual = item;
         };
 
 
