@@ -118,7 +118,7 @@ angular.module('bikeApp.mantenimientos', ['ngRoute']).config(['$routeProvider', 
                         var inf = [];
                         inf.push(" ")
                         inf.push("ID");
-                        inf.push("Nombre");
+                        inf.push("Tipo");
                         inf.push("Descripción");
                         var dataString = Array.prototype.join.call(inf, ",");
                         csvContent += index < d.length ? dataString+ "\n" : dataString;
@@ -126,7 +126,7 @@ angular.module('bikeApp.mantenimientos', ['ngRoute']).config(['$routeProvider', 
                     var inf = [];
                     inf.push(index)
                     inf.push(infoArray.id);
-                    inf.push(infoArray.nombre);
+                    inf.push(infoArray.tipo);
                     inf.push(infoArray.descripcion);
                     var dataString = Array.prototype.join.call(inf, ",");
                     csvContent += index < d.length ? dataString+ "\n" : dataString;
