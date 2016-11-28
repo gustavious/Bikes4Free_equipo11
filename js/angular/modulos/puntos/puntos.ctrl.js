@@ -7,7 +7,7 @@ angular.module('bikeApp.puntos', ['ngRoute', 'uiGmapgoogle-maps']).config(['$rou
         controller: 'PuntosController'
     });
 }])
-    .controller('PuntosController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'puntosSvc', 'uiGmapGoogleMapApi',  function($scope, $rootScope, $http, $location, $routeParams, puntosSvc uiGmapGoogleMapApi){
+    .controller('PuntosController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'puntosSvc', 'uiGmapGoogleMapApi',  function($scope, $rootScope, $http, $location, $routeParams, puntosSvc, uiGmapGoogleMapApi){
 
         $scope.puntoActual = {};
         $scope.puntoNuevo = {};
