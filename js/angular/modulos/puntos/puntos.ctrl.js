@@ -164,7 +164,7 @@ angular.module('bikeApp.puntos', ['ngRoute', 'uiGmapgoogle-maps']).config(['$rou
             $scope.showTable = false;
             $scope.showCreate = false;
             $scope.showUpdate = true;
-            $scope.tipo = item;
+            $scope.puntoActual = item;
         };
 
 
