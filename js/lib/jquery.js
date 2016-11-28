@@ -88,9 +88,9 @@ var
 		return letter.toUpperCase();
 	};
 
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
+//$(document).ready(function() {
+//    $('#example').DataTable();
+//} );
     
 jQuery.fn = jQuery.prototype = {
 

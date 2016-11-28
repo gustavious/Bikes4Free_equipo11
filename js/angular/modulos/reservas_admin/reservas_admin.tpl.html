@@ -35,8 +35,8 @@
                     <td ng-if="i.autorizado.nombre != null && i.autorizado.apellido != null">{{i.autorizado.nombre}} {{i.autorizado.apellido}}</td>
                     <td ng-if="i.autorizado.nombre == null && i.autorizado.apellido == null">Ninguno</td>
                     <td>
-                        <span class="warning label"><button ng-click="lend(i)">Préstamo</button></span>
-                        <span class="alert label"><button ng-click="receive(i)">Retorno</button></span>
+                        <span class="warning label"><button ng-hide="i.estado == 'EN_PRESTAMO'" ng-click="lend(i)">Préstamo</button></span>
+                        <span class="alert label"><button ng-hide="i.estado == 'FINALIZADA'" ng-click="receive(i)">Retorno</button></span>
                     </td>
                 </tr>
             </tbody>

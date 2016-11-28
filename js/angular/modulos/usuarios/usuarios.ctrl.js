@@ -76,12 +76,12 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
 
                     if(window.location.port)
                     {
-                        window.location = "http://" + window.location.hostname + ":" + window.location.port + "/login.html";
+                        window.location = "http://" + window.location.hostname + ":" + window.location.port + "/index.html";
                     }
 
                     else
                     {
-                        window.location = "http://" + window.location.hostname + "/login.html";
+                        window.location = "http://" + window.location.hostname + "/index.html";
                     }
 
                 }, function errorCallback(response) {
