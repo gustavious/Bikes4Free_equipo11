@@ -74,6 +74,13 @@ nav{
     padding-top: 90px;
 }
 
+.angular-google-map-container {
+    height: 300px;
+}
+.angular-google-map {
+    height: 300px;
+}
+
 .list{
 /*    width: auto;*/
     text-align: center;

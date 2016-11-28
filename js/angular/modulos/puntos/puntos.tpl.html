@@ -26,6 +26,22 @@
     </div>
 </div>
 
+<div ng-hide="showUpdate || showCreate">
+<ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options">
+<ui-gmap-markers models="markers" coords="'self'" icon="'icon'" click="markerClick">
+</ui-gmap-markers>    
+ <ui-gmap-window 
+      show="clickEnMarker" 
+      coords="infoMarker.modelo" 
+      templateUrl="'js/angular/modulos/puntos/info-ventana.tpl.html'" 
+      templateParameter="infoMarker.modelo" 
+      options="infoMarker.options"
+      closeClick="cerrarVentana"
+      ng-cloak>
+      </ui-gmap-window>
+</ui-gmap-google-map>
+</div>
+
 
 <div id="puntos-create" class="form" ng-if="showCreate && !darError()">
     <form name="puntosCreateForm">

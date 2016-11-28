@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function($routeProvider){
+angular.module('bikeApp.puntos', ['ngRoute', 'uiGmapgoogle-maps']).config(['$routeProvider', function($routeProvider){
     $routeProvider
         .when('/puntos', {
         templateUrl: 'js/angular/modulos/puntos/puntos.tpl.html',
         controller: 'PuntosController'
     });
 }])
-    .controller('PuntosController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'puntosSvc', function($scope, $rootScope, $http, $location, $routeParams, puntosSvc){
+    .controller('PuntosController', ['$scope', '$rootScope', '$http', '$location', '$routeParams', 'puntosSvc', 'uiGmapGoogleMapApi',  function($scope, $rootScope, $http, $location, $routeParams, puntosSvc uiGmapGoogleMapApi){
 
         $scope.puntoActual = {};
         $scope.puntoNuevo = {};
@@ -16,6 +16,10 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
         $scope.showUpdate = false;
         $scope.hayError = false;
         $scope.error1;
+        $scope.markers = [];
+        $scope.map = { center: { latitude: 4.6569221, longitude: -74.0965247 }, zoom: 12 };
+        $scope.clickEnMarker = false;
+        $scope.infoMarker = {};
 
         //CREATE
         $scope.create = function(){
@@ -48,7 +52,19 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
         //RETRIEVE
         $scope.retrieve = function(){
             puntosSvc.retrieve().then(function successCallback(response) {
-                $scope.items = response.data;
+                 $scope.items = response.data;
+                $scope.puntosRetorno = response.data;
+                for(var i = 0; i<$scope.puntosRetorno.length;i++)
+                {
+                    $scope.puntoMarkerActual = $scope.puntosRetorno[i];
+                    var ret = {
+                        latitude: $scope.puntoMarkerActual.latitud,
+                        longitude: $scope.puntoMarkerActual.longitud,
+                        title: $scope.puntoMarkerActual.nombre,
+                        id: $scope.puntoMarkerActual.id
+                    }
+                    $scope.markers.push(ret);    
+                }
             }, function errorCallback(response) {
                 console.log('error');
                 $scope.hayError = true;
@@ -178,5 +194,22 @@ angular.module('bikeApp.puntos', ['ngRoute']).config(['$routeProvider', function
             $scope.hayError = !$scope.hayError;
             console.log($scope.hayError);
         };
+        
+        $scope.markerClick = function(marker, eventName, model){
+            $scope.clickEnMarker = true;
+            $scope.infoMarker.id = model.id;
+            $scope.infoMarker.latitud = model.latitude;
+            $scope.infoMarker.longitud = model.longitude;
+            $scope.infoMarker.nombre = model.title;
+            $scope.infoMarker.modelo = model;
+            $scope.infoMarker.options = {
+            pixelOffset: {width:-1,height:-20}
+            }
+            
+        }
+        
+        $scope.cerrarVentana = function(){
+            $scope.clickEnMarker = false;
+        }
 
     }]);
