@@ -18,9 +18,9 @@
                 <tr ng-repeat="i in items">
                     <td>{{i.id}}</td>
                     <td>{{i.usuario.nombre}} {{i.usuario.apellido}}</td>
-                    <td>{{i.fecha_reserva}}</td>
-                    <td>{{i.fecha_entrega}}</td>
-                    <td>{{i.tiempo}}</td>
+                    <td>{{i.fecha_reserva | date:'medium'}}</td>
+                    <td>{{i.fecha_entrega | date:'medium'}}</td>
+                    <td>{{i.tiempo | ms_horas}} horas</td>
                     <td>{{i.puntoPrestamo.nombre}}</td>
                     <td ng-if="i.puntoRetorno.nombre != null">{{i.puntoRetorno.nombre}}</td>
                     <td ng-if="i.puntoRetorno.nombre == null">No ha sido retornada</td>
