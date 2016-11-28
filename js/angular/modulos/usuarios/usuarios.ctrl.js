@@ -38,6 +38,7 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
         $scope.envioConfirmacion = false;
         $scope.confirmacion = "";
         $scope.submitted=false;
+        $scope.mostrarVideo =  true;
 
         //CREATE
         $scope.create = function(){
@@ -334,7 +335,11 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
         $scope.changeLoggued = function(  ){
             $scope.loggued = !$scope.loggued;
         };
-
+        //Cambio de video
+        $scope.cambio = function(){
+            $scope.mostrarVideo = false;
+        }
+        
         //Login
         $scope.login = function( ){
             $scope.submitted=true;
@@ -401,11 +406,11 @@ angular.module('bikeApp.usuarios', ['ngRoute', 'ngCookies']).config(['$routeProv
 
             if(window.location.port)
             {
-                window.location = "http://" + window.location.hostname + ":" + window.location.port + "/login.html";
+                window.location = "http://" + window.location.hostname + ":" + window.location.port + "/index.html";
             }
             else
             {
-                window.location = "http://" + window.location.hostname + "/login.html";
+                window.location = "http://" + window.location.hostname + "/index.html";
             }
 
             usuariosSvc.logout().then(function successCallback(response) {

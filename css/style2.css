@@ -72,8 +72,16 @@ nav{
     font-weight: 700;
 }
 
-#sesion:hover, #registrarse:hover, #loguearse:hover{
+#sesion:hover, #registrarse:hover, #loguearse:hover, #uso:hover{
     background-color: #eddd53;
+}
+
+
+
+div.centered
+{
+    
+    margin-left: 600px;
 }
 
 #registrarse{
@@ -97,6 +105,20 @@ nav{
 }
 .angular-google-map {
     height: 300px;
+}
+#uso
+{
+    float: right;
+    background-color: #009e8f;
+    /*    background-color: #66b7f0;*/
+    width: 140px;
+    height: 40px;
+    margin-top: 10px;
+    margin-right: 15px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .list{

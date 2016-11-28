@@ -26,6 +26,8 @@
             <ul class="menu">
                 <li><a class="button" id="loguearse" href="#/login">Iniciar Sesión</a></li>
                 <li><a class="button" id="registrarse" href="#/register">Registrarse</a></li>
+                <li><a class="button" id="uso" href="https://drive.google.com/file/d/0B2tibzXhXQB1cUpGZkFDVHZtY0U/view?usp=sharing">Manual de Uso</a></li>
+
             </ul>
         </div>
     </nav>
@@ -35,6 +37,12 @@
             <div id="view-module" ng-view></div>
         </div>
     </div>
+        
+    	<div class ="centered" ng-show="mostrarVideo">
+            <div class="flex-video">
+                <iframe style="width:60%;height:50%; border:0px;" src="https://www.youtube.com/embed/V9gkYw35Vws" allowfullscreen></iframe>
+            </div>
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
         <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
